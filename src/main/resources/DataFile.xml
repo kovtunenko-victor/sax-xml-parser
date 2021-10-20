@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<node is-file="false">
+	<name>/</name>
+	<children>
+		<child is-file="true">
+			<name>file-77194797.xmml</name>
+		</child>
+		<child is-file="false">
+			<name>dir-88.971375</name>
+			<children>
+				<child is-file="true">
+					<name>file-9.738721998xaavaa</name>
+				</child>
+				<child is-file="false">
+					<name>dir-219753.7.95</name>
+					<children>
+						<child is-file="true">
+							<name>file-974847.2197xmhtml</name>
+						</child>
+					</children>
+				</child>
+			</children>
+		</child>
+	</children>
+</node>
