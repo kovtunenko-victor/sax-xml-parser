@@ -12,17 +12,17 @@ import org.apache.commons.cli.ParseException;
 import com.ylab.kovtunenko.sax.xml.parser.domain.ApplicationProperties;
 import com.ylab.kovtunenko.sax.xml.parser.exceptions.SaxXmlParserException;
 
-public class InputPropertiesParser implements Parser<ApplicationProperties> {
+public class InputPropertiesParserProvider implements ParserProvider<ApplicationProperties> {
     private final String[] properties;
     private final Options options = new Options();
     
-    public InputPropertiesParser(String[] properties) {
+    public InputPropertiesParserProvider(String[] properties) {
         initOptions(); 
         this.properties = Arrays.copyOf(properties, properties.length);  
     }
 
     @Override
-    public ApplicationProperties read() {
+    public ApplicationProperties parse() {
         ApplicationProperties appProps;
         CommandLine cmd = parseProperties();
 

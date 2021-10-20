@@ -14,6 +14,11 @@ public class ApplicationProperties {
         this.searchMask = searchMask;
     }
     
+    public ApplicationProperties(ApplicationProperties appProps) {
+        this.fileName = appProps.fileName;
+        this.searchMask = appProps.searchMask;
+    }
+    
     public String getFileName() {
         return fileName;
     }
