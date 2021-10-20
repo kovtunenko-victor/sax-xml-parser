@@ -3,19 +3,19 @@
 	<name>/</name>
 	<children>
 		<child is-file="true">
-			<name>file-77194797.xmml</name>
+			<name>file-77194797.xml</name>
 		</child>
 		<child is-file="false">
-			<name>dir-88.971375</name>
+			<name>dir-88971375</name>
 			<children>
 				<child is-file="true">
-					<name>file-9.738721998xaavaa</name>
+					<name>file-9738721998.java</name>
 				</child>
 				<child is-file="false">
-					<name>dir-219753.7.95</name>
+					<name>dir-219753795</name>
 					<children>
 						<child is-file="true">
-							<name>file-974847.2197xmhtml</name>
+							<name>file-974842197.xhtml</name>
 						</child>
 					</children>
 				</child>
