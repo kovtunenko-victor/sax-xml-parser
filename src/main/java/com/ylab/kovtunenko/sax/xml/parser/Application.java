@@ -13,6 +13,6 @@ public class Application {
         ApplicationProperties appProps = propertiesParser.parse();
         
         ParserProvider<Node> xmlParser = new XmlFileParserProvider(appProps);
-        xmlParser.parse();
+        System.out.println(xmlParser.parse().toString());
     }
 }

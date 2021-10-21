@@ -8,8 +8,39 @@
 		<child is-file="false">
 			<name>dir-88971375</name>
 			<children>
+			    <child is-file="false">
+					<name>dir-414754795</name>
+					<children>
+						<child is-file="true">
+							<name>file-09938329.pdf</name>
+						</child>
+						<child is-file="false">
+							<name>dir-8678678675</name>
+						</child>
+						<child is-file="true">
+							<name>file-88874222.java</name>
+						</child>
+						<child is-file="true">
+							<name>file-33399233.dbf</name>
+						</child>
+						<child is-file="false">
+							<name>dir-67567567</name>
+							<children>
+								<child is-file="true">
+									<name>file-12321321.rtf</name>
+								</child>
+							</children>
+						</child>
+						<child is-file="true">
+							<name>file-12333233.xml</name>
+						</child>
+					</children>
+				</child>
 				<child is-file="true">
 					<name>file-9738721998.java</name>
+				</child>
+				<child is-file="true">
+					<name>file-777939833.doc</name>
 				</child>
 				<child is-file="false">
 					<name>dir-219753795</name>
@@ -17,9 +48,18 @@
 						<child is-file="true">
 							<name>file-974842197.xhtml</name>
 						</child>
+						<child is-file="true">
+							<name>file-1541224222.txt</name>
+						</child>
 					</children>
 				</child>
 			</children>
+		</child>
+		<child is-file="true">
+			<name>file-2576624200.xlsx</name>
+		</child>
+		<child is-file="false">
+			<name>dir-985455555</name>
 		</child>
 	</children>
 </node>

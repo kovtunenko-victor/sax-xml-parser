@@ -26,13 +26,16 @@ public class XmlFileParserProvider implements ParserProvider<Node> {
     public Node parse() {
         try {
             SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
-            saxParser.parse(readFile(), new MySaxHandler());
+            MySaxHandler handler = new MySaxHandler();
+            saxParser.parse(readFile(), handler);
+            
+            return handler.rootNode;
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ex) {
+            throw new SaxXmlParserException("Xml file parse exception", ex);
         }
 
-        return null;
+        
     }
 
     private File readFile() {
@@ -61,6 +64,8 @@ public class XmlFileParserProvider implements ParserProvider<Node> {
         private Node rootNode;
         private Node indexNode;
         private Node lastNode;
+        
+        private long level = 0;
 
         @Override
         public void startDocument() throws SAXException {
@@ -68,30 +73,24 @@ public class XmlFileParserProvider implements ParserProvider<Node> {
         }
 
         @Override
-        public void endDocument() throws SAXException {
-            System.out.print(rootNode.toString());
-        }
-
-        @Override
         public void startElement(String uri, String localName, String qName, Attributes attributes)
                 throws SAXException {
             switch (qName) {
             case NODE:
-                System.out.print("Start: " + qName + " ");
-                System.out.println(attributes.getValue("is-file"));
                 nodeBuilder.setIsFile(Boolean.parseBoolean(attributes.getValue("is-file")));
                 break;
             case NAME:
-                System.out.print("Start: " + qName + " ");
                 elementValue = new StringBuilder();
                 break;
             case CHILDREN:
-                System.out.println("Start: " + qName + " ");
-                buildNode(true);
+                buildNode();
+                level++;
+                if(lastNode != null) {
+                    indexNode = lastNode;
+                }
+                
                 break;
             case CHILD:
-                System.out.print("Start: " + qName + " ");
-                System.out.println(attributes.getValue("is-file"));
                 nodeBuilder.setIsFile(Boolean.parseBoolean(attributes.getValue("is-file")));
                 break;
             }
@@ -102,19 +101,18 @@ public class XmlFileParserProvider implements ParserProvider<Node> {
             switch (qName) {
             case NODE:
                 if (rootNode == null) {
-                    buildNode(false);
+                    buildNode();
                 }
                 break;
             case CHILD:
-                buildNode(false);
+                buildNode();
+                break;
+            case CHILDREN:
+                level--;
+                indexNode = indexNode.getRoot();
                 break;
             case NAME:
-                System.out.print(elementValue.toString());
-                System.out.println(" End: " + qName);
                 nodeBuilder.setName(elementValue.toString());
-                break;
-            default:
-                System.out.println("End: " + qName);
                 break;
             }
         }
@@ -128,20 +126,19 @@ public class XmlFileParserProvider implements ParserProvider<Node> {
             }
         }
 
-        private void buildNode(boolean switchIndex) {
+        private void buildNode() {
             if (indexNode == null) {
+                nodeBuilder.setLevel(0);
                 rootNode = nodeBuilder.build();
                 indexNode = rootNode;
                 nodeBuilder = Node.builder();
             } else {
-                if (nodeBuilder.isInit()) {
+                 if (nodeBuilder.isInit()) {
+                    nodeBuilder.setLevel(level);
+                    nodeBuilder.setRoot(indexNode);
                     lastNode = nodeBuilder.build();
                     indexNode.getChildren().add(lastNode);
                     nodeBuilder = Node.builder();
-
-                    if (switchIndex == true) {
-                        indexNode = lastNode;
-                    }
                 }
             }
         }
