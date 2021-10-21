@@ -3,7 +3,6 @@ package com.ylab.kovtunenko.sax.xml.parser.providers;
 import java.io.File;
 import java.net.URISyntaxException;
 
-import com.ylab.kovtunenko.sax.xml.parser.Application;
 import com.ylab.kovtunenko.sax.xml.parser.exceptions.SaxXmlParserException;
 
 public class FileReaderProvider implements ReaderProvider<File, String> {
@@ -12,8 +11,10 @@ public class FileReaderProvider implements ReaderProvider<File, String> {
         try {
             File file = new File(input);
 
-            if (file.exists() == false) {
-                file = new File(Application.class.getClassLoader().getResource(input).toURI());
+            if (file.exists() == false && this.getClass().getClassLoader().getResource(input) != null) {
+                file = new File(this.getClass().getClassLoader().getResource(input).toURI());
+            } else {
+                throw new SaxXmlParserException(String.format("File [%s] not found", input));
             }
 
             return file;
