@@ -3,6 +3,7 @@ package com.ylab.kovtunenko.sax.xml.parser;
 
 import com.ylab.kovtunenko.sax.xml.parser.domain.ApplicationProperties;
 import com.ylab.kovtunenko.sax.xml.parser.domain.Node;
+import com.ylab.kovtunenko.sax.xml.parser.providers.FileReaderProvider;
 import com.ylab.kovtunenko.sax.xml.parser.providers.InputPropertiesParserProvider;
 import com.ylab.kovtunenko.sax.xml.parser.providers.ParserProvider;
 import com.ylab.kovtunenko.sax.xml.parser.providers.XmlFileParserProvider;
@@ -12,7 +13,7 @@ public class Application {
         ParserProvider<ApplicationProperties> propertiesParser = new InputPropertiesParserProvider(args);
         ApplicationProperties appProps = propertiesParser.parse();
         
-        ParserProvider<Node> xmlParser = new XmlFileParserProvider(appProps);
+        ParserProvider<Node> xmlParser = new XmlFileParserProvider(appProps, new FileReaderProvider());
         System.out.println(xmlParser.parse().toString());
     }
 }

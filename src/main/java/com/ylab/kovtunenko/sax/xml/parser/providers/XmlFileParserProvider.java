@@ -1,7 +1,6 @@
 package com.ylab.kovtunenko.sax.xml.parser.providers;
 
 import java.io.File;
-import java.net.URISyntaxException;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -10,16 +9,17 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import com.ylab.kovtunenko.sax.xml.parser.Application;
 import com.ylab.kovtunenko.sax.xml.parser.domain.ApplicationProperties;
 import com.ylab.kovtunenko.sax.xml.parser.domain.Node;
 import com.ylab.kovtunenko.sax.xml.parser.exceptions.SaxXmlParserException;
 
 public class XmlFileParserProvider implements ParserProvider<Node> {
     private final ApplicationProperties appProps;
-
-    public XmlFileParserProvider(ApplicationProperties appProps) {
+    private final ReaderProvider<File, String> reader;
+    
+    public XmlFileParserProvider(ApplicationProperties appProps, ReaderProvider<File, String> reader) {
         this.appProps = new ApplicationProperties(appProps);
+        this.reader = reader;
     }
 
     @Override
@@ -27,28 +27,12 @@ public class XmlFileParserProvider implements ParserProvider<Node> {
         try {
             SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
             MySaxHandler handler = new MySaxHandler();
-            saxParser.parse(readFile(), handler);
+            saxParser.parse(reader.read(appProps.getFileName()), handler);
             
             return handler.rootNode;
 
         } catch (Exception ex) {
             throw new SaxXmlParserException("Xml file parse exception", ex);
-        }
-
-        
-    }
-
-    private File readFile() {
-        try {
-            File file = new File(appProps.getFileName());
-
-            if (file.exists() == false) {
-                file = new File(Application.class.getClassLoader().getResource(appProps.getFileName()).toURI());
-            }
-
-            return file;
-        } catch (URISyntaxException ex) {
-            throw new SaxXmlParserException(String.format("Can`t open file [%s]", appProps.getFileName()), ex);
         }
     }
 
