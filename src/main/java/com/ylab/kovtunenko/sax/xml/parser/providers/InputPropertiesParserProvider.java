@@ -1,6 +1,8 @@
 package com.ylab.kovtunenko.sax.xml.parser.providers;
 
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -29,17 +31,36 @@ public class InputPropertiesParserProvider implements ParserProvider<Application
         if(cmd.getOptionValue("search") == null) {
             appProps = new ApplicationProperties(cmd.getOptionValue("file"));
         } else {
-            appProps = new ApplicationProperties(cmd.getOptionValue("file"), cmd.getOptionValue("search"));
+            appProps = new ApplicationProperties(cmd.getOptionValue("file"), formatSearchValue(cmd.getOptionValue("search")));
         }
         
         return appProps;
+    }
+    
+    private String formatSearchValue (String searchValue) {
+        String value = new String (searchValue);
+        value = value.replaceAll("'", "");
+
+        Matcher matcher = Pattern.compile("[\\*]\\..+").matcher(value);
+        if (matcher.find()) {
+            value = "." + value.replaceAll("\\*", "\\*\\\\");
+            return value;
+        }
+        
+        matcher = Pattern.compile(".+\\.\\*").matcher(value);
+        if (matcher.find()) {
+            value = value.replaceAll("\\.", "\\\\\\.\\.");
+            return value;
+        }
+        
+        return value;
     }
     
     private void initOptions() {
         Option file = new Option("f", "file", true, "input file");
         file.setRequired(true);
         
-        Option search = new Option("s", "search", true, "regexp for search");
+        Option search = new Option("s", "search", true, "simple search");
         search.setRequired(false);
         
         options.addOption(file);
