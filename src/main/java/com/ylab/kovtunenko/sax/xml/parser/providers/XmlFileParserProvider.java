@@ -1,7 +1,9 @@
 package com.ylab.kovtunenko.sax.xml.parser.providers;
 
 import java.io.File;
+import java.io.IOException;
 
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
@@ -18,7 +20,7 @@ public class XmlFileParserProvider implements ParserProvider<Node> {
     private final ReaderProvider<File, String> reader;
     
     public XmlFileParserProvider(ApplicationProperties appProps, ReaderProvider<File, String> reader) {
-        this.appProps = new ApplicationProperties(appProps);
+        this.appProps = appProps;
         this.reader = reader;
     }
 
@@ -29,9 +31,13 @@ public class XmlFileParserProvider implements ParserProvider<Node> {
             MySaxHandler handler = new MySaxHandler();
             saxParser.parse(reader.read(appProps.getFileName()), handler);
             
+            if(handler.rootNode == null) {
+                throw new SaxXmlParserException("Xml file not in format");
+            }
+            
             return handler.rootNode;
 
-        } catch (Exception ex) {
+        } catch (IOException | SAXException | ParserConfigurationException | IllegalArgumentException ex) {
             throw new SaxXmlParserException("Xml file parse exception", ex);
         }
     }
