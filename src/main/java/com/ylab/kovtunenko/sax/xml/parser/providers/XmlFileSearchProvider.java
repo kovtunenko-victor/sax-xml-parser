@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.ylab.kovtunenko.sax.xml.parser.domain.Node;
+import com.ylab.kovtunenko.sax.xml.parser.exceptions.SaxXmlParserException;
 
 public class XmlFileSearchProvider implements SearchProvider<String, String> {
     private final StringBuilder result;
@@ -22,6 +23,10 @@ public class XmlFileSearchProvider implements SearchProvider<String, String> {
     }
     
     private void getFilePath(Node node, String searchData) {
+        if(node == null || searchData == null) {
+            throw new SaxXmlParserException("Node or searchData is null");
+        }
+        
         if(node.getIsFile() == false) {
             for(Node item : node.getChildren()) {
                 getFilePath(item, searchData);
