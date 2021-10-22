@@ -9,8 +9,12 @@ $ java -jar assignment.jar -f <xml_file> -s <input>
 ============================================================================================================
 
 Что бы запусить приложение нужно клонировать репозиторий на локальный компьютер собрать проект (например командой maven install...)
-В проекте используется библиотека "commons-cli", из за этого что бы избежать лишней настройки classpath при запуске приложения maven собрал сборку с включенными зависимостями sax-xml-parser-0.0.1-SNAPSHOT-jar-with-dependencies.jar
-Дальше можно запустить java -jar sax-xml-parser-0.0.1-SNAPSHOT-jar-with-dependencies.jar -f <xml_file> -s <input> (пример java -jar sax-xml-parser-0.0.1-SNAPSHOT-jar-with-dependencies.jar -f DataFile.xml -s '*.java')
--f <xml_file> - обязательный параметр, если будет не задан то будет вызвано исключение. Можно указать в качестве аргумента -f DataFile.xml, этот файл скомпилирован в архив jar.
+В проекте используется библиотека "commons-cli", из за этого что бы избежать лишней настройки classpath при запуске приложения maven собрал сборку с 
+включенными зависимостями sax-xml-parser-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+
+Дальше можно запустить java -jar sax-xml-parser-0.0.1-SNAPSHOT-jar-with-dependencies.jar -f <xml_file> -s <input> 
+(пример java -jar sax-xml-parser-0.0.1-SNAPSHOT-jar-with-dependencies.jar -f DataFile.xml -s '*.java')
+
+-f <xml_file> - обязательный параметр, если будет не задан то будет вызвано исключение. Можно указать в качестве аргумента -f DataFile.xml, этот файл можно взять из resources.
 -s <input> - реализовано 3 варианта задания фильтра: 1) по расширению в фомате '*.ext'; 2) по имени в формате 'filename.*' 3) regexp пример '.*?[a-z]{4}-\d+\.[a-z]+'
 
