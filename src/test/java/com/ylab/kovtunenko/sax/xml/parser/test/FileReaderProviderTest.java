@@ -12,7 +12,7 @@ import com.ylab.kovtunenko.sax.xml.parser.exceptions.SaxXmlParserException;
 import com.ylab.kovtunenko.sax.xml.parser.providers.FileReaderProvider;
 
 public class FileReaderProviderTest {
-    private FileReaderProvider reader = new FileReaderProvider();
+    private FileReaderProvider reader = new ReaderProviderTestImpl();
     
     @Test
     public void readMethodShuldReturnFileByInputString( ) {
