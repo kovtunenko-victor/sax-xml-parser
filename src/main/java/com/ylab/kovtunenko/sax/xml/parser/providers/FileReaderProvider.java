@@ -11,13 +11,16 @@ public class FileReaderProvider implements ReaderProvider<File, String> {
         try {
             File file = new File(input);
 
-            if (file.exists() == false && this.getClass().getClassLoader().getResource(input) != null) {
-                file = new File(this.getClass().getClassLoader().getResource(input).toURI());
+            if (file.exists() == true) {
+                return file;
             } else {
-                throw new SaxXmlParserException(String.format("File [%s] not found", input));
+                if (file.exists() == false && this.getClass().getClassLoader().getResource(input) != null) {
+                    file = new File(this.getClass().getClassLoader().getResource(input).toURI());
+                    return file;
+                } else {
+                    throw new SaxXmlParserException(String.format("File [%s] not found", input));
+                }
             }
-
-            return file;
         } catch (URISyntaxException ex) {
             throw new SaxXmlParserException(String.format("Can`t open file [%s]", input), ex);
         }
