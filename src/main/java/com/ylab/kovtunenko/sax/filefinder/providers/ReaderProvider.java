@@ -1,4 +1,4 @@
-package com.ylab.kovtunenko.sax.xml.parser.providers;
+package com.ylab.kovtunenko.sax.filefinder.providers;
 
 public interface ReaderProvider<T, V> {
     T read(V input);

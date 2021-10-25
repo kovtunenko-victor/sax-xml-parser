@@ -1,4 +1,4 @@
-package com.ylab.kovtunenko.sax.xml.parser.providers;
+package com.ylab.kovtunenko.sax.filefinder.providers;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,9 +11,9 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import com.ylab.kovtunenko.sax.xml.parser.domain.ApplicationProperties;
-import com.ylab.kovtunenko.sax.xml.parser.domain.Node;
-import com.ylab.kovtunenko.sax.xml.parser.exceptions.SaxXmlParserException;
+import com.ylab.kovtunenko.sax.filefinder.domain.ApplicationProperties;
+import com.ylab.kovtunenko.sax.filefinder.domain.Node;
+import com.ylab.kovtunenko.sax.filefinder.exceptions.SaxXmlParserException;
 
 public class XmlFileParserProvider implements ParserProvider<Node> {
     private final ApplicationProperties appProps;

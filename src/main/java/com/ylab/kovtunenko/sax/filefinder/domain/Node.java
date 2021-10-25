@@ -1,4 +1,4 @@
-package com.ylab.kovtunenko.sax.xml.parser.domain;
+package com.ylab.kovtunenko.sax.filefinder.domain;
 
 import java.util.ArrayList;
 import java.util.List;

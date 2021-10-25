@@ -1,4 +1,4 @@
-package com.ylab.kovtunenko.sax.xml.parser.exceptions;
+package com.ylab.kovtunenko.sax.filefinder.exceptions;
 
 public class SaxXmlParserException extends RuntimeException { 
     private static final long serialVersionUID = 1L;

@@ -1,4 +1,4 @@
-package com.ylab.kovtunenko.sax.xml.parser.providers;
+package com.ylab.kovtunenko.sax.filefinder.providers;
 
 import java.util.Arrays;
 import java.util.regex.Matcher;
@@ -11,8 +11,8 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
-import com.ylab.kovtunenko.sax.xml.parser.domain.ApplicationProperties;
-import com.ylab.kovtunenko.sax.xml.parser.exceptions.SaxXmlParserException;
+import com.ylab.kovtunenko.sax.filefinder.domain.ApplicationProperties;
+import com.ylab.kovtunenko.sax.filefinder.exceptions.SaxXmlParserException;
 
 public class InputPropertiesParserProvider implements ParserProvider<ApplicationProperties> {
     private final String[] properties;

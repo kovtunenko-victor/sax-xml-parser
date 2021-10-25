@@ -1,20 +1,20 @@
-package com.ylab.kovtunenko.sax.xml.parser.providers;
+package com.ylab.kovtunenko.sax.filefinder.providers;
 
 import java.io.File;
 
-import com.ylab.kovtunenko.sax.xml.parser.domain.ApplicationProperties;
-import com.ylab.kovtunenko.sax.xml.parser.domain.Node;
-import com.ylab.kovtunenko.sax.xml.parser.providers.builders.ProviderBuilder;
+import com.ylab.kovtunenko.sax.filefinder.domain.ApplicationProperties;
+import com.ylab.kovtunenko.sax.filefinder.domain.Node;
+import com.ylab.kovtunenko.sax.filefinder.providers.builders.BuilderProvider;
 
-public class SaxXmlParserProvider {
+public class FileNameFinderProvider {
     private final ParserProvider<ApplicationProperties> propertiesParser;
-    private final ProviderBuilder<XmlFileParserProvider> xmlParserBuilder;
-    private final ProviderBuilder<XmlFileSearchProvider> xmlFinderBuilder;
+    private final BuilderProvider<XmlFileParserProvider> xmlParserBuilder;
+    private final BuilderProvider<NodeSearchProvider> xmlFinderBuilder;
     private final ReaderProvider<File, String> reader;
     
-    public SaxXmlParserProvider(ParserProvider<ApplicationProperties> propertiesParser
-            , ProviderBuilder<XmlFileParserProvider> xmlParserBuilder
-            , ProviderBuilder<XmlFileSearchProvider> xmlFinderBuilder
+    public FileNameFinderProvider(ParserProvider<ApplicationProperties> propertiesParser
+            , BuilderProvider<XmlFileParserProvider> xmlParserBuilder
+            , BuilderProvider<NodeSearchProvider> xmlFinderBuilder
             , ReaderProvider<File, String> reader) {
         this.propertiesParser = propertiesParser;  
         this.xmlParserBuilder = xmlParserBuilder;

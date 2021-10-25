@@ -1,18 +1,19 @@
-package com.ylab.kovtunenko.sax.xml.parser.providers;
+package com.ylab.kovtunenko.sax.filefinder.providers;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.ylab.kovtunenko.sax.xml.parser.domain.Node;
-import com.ylab.kovtunenko.sax.xml.parser.exceptions.SaxXmlParserException;
+import com.ylab.kovtunenko.sax.filefinder.domain.Node;
+import com.ylab.kovtunenko.sax.filefinder.exceptions.SaxXmlParserException;
 
-public class XmlFileSearchProvider implements SearchProvider<String, String> {
+public class NodeSearchProvider implements SearchProvider<String, String> {
     private final StringBuilder result;
     private final Node node;
-    private StringBuilder tempPath;
+    private final StringBuilder tempPath;
     
-    public XmlFileSearchProvider(Node node) {
+    public NodeSearchProvider(Node node) {
         result = new StringBuilder();
+        tempPath = new StringBuilder();
         this.node = node;
     }
     
@@ -28,16 +29,16 @@ public class XmlFileSearchProvider implements SearchProvider<String, String> {
         }
         
         if(node.getIsFile() == false) {
+            setFolder(node.getName());
+            
             for(Node item : node.getChildren()) {
                 getFilePath(item, searchData);
             }
-        } else { 
-            tempPath = new StringBuilder();
-            getRootPath(node);
             
+            tempPath.setLength(calcTempPathLength(node.getName()));
+        } else { 
             if(doSearch(searchData, node.getName())) {
-                tempPath.append(node.getName());
-                result.append(tempPath).append("\r\n");
+                result.append(tempPath).append(node.getName()).append("\r\n");
             }
         }
     }
@@ -52,15 +53,22 @@ public class XmlFileSearchProvider implements SearchProvider<String, String> {
             return false;
         }
     }
-
-    private void getRootPath(Node node) {
-        if(node.getRoot() != null) {
-            if(!node.getRoot().getName().equals("/")) {
-                tempPath.insert(0, node.getRoot().getName() + "/" );
-            } else {
-                tempPath.insert(0, node.getRoot().getName() );
-            }
-            getRootPath(node.getRoot());
+ 
+    private void setFolder(String name) {
+        if(!name.equals("/")) {
+            tempPath.append(name).append("/");
+        } else {
+            tempPath.append(name);
+        }
+    }
+    
+    private int calcTempPathLength(String name) {
+        int result = tempPath.length()-name.length()-1;
+        
+        if(result > 0 ) {
+            return result;
+        } else {
+            return tempPath.length();
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.ylab.kovtunenko.sax.xml.parser.test;
+package com.ylab.kovtunenko.sax.filefinder.test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -8,8 +8,8 @@ import java.io.File;
 
 import org.junit.jupiter.api.Test;
 
-import com.ylab.kovtunenko.sax.xml.parser.exceptions.SaxXmlParserException;
-import com.ylab.kovtunenko.sax.xml.parser.providers.FileReaderProvider;
+import com.ylab.kovtunenko.sax.filefinder.exceptions.SaxXmlParserException;
+import com.ylab.kovtunenko.sax.filefinder.providers.FileReaderProvider;
 
 public class FileReaderProviderTest {
     private FileReaderProvider reader = new ReaderProviderTestImpl();

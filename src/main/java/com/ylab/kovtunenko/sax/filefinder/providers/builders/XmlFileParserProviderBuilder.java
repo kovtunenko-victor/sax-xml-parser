@@ -1,22 +1,22 @@
-package com.ylab.kovtunenko.sax.xml.parser.providers.builders;
+package com.ylab.kovtunenko.sax.filefinder.providers.builders;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.ylab.kovtunenko.sax.xml.parser.domain.ApplicationProperties;
-import com.ylab.kovtunenko.sax.xml.parser.exceptions.SaxXmlParserException;
-import com.ylab.kovtunenko.sax.xml.parser.providers.ReaderProvider;
-import com.ylab.kovtunenko.sax.xml.parser.providers.XmlFileParserProvider;
+import com.ylab.kovtunenko.sax.filefinder.domain.ApplicationProperties;
+import com.ylab.kovtunenko.sax.filefinder.exceptions.SaxXmlParserException;
+import com.ylab.kovtunenko.sax.filefinder.providers.ReaderProvider;
+import com.ylab.kovtunenko.sax.filefinder.providers.XmlFileParserProvider;
 
-public class XmlFileParserProviderBuilder implements ProviderBuilder <XmlFileParserProvider> {
+public class XmlFileParserProviderBuilder implements BuilderProvider <XmlFileParserProvider> {
     private final Map<String, Object> params = new HashMap<>();
     
     public static final String APPLICATION_PROPERTIES = "ApplicationProperties";
     public static final String READER_PROVIDER = "ReaderProvider";
     
     @Override
-    public ProviderBuilder<XmlFileParserProvider> addParam(String key, Object value) {
+    public BuilderProvider<XmlFileParserProvider> addParam(String key, Object value) {
         params.put(key, value);
         return this;
     }

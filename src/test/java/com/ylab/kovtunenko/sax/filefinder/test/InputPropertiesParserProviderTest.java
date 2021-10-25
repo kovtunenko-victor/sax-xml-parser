@@ -1,4 +1,4 @@
-package com.ylab.kovtunenko.sax.xml.parser.test;
+package com.ylab.kovtunenko.sax.filefinder.test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -6,9 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import com.ylab.kovtunenko.sax.xml.parser.domain.ApplicationProperties;
-import com.ylab.kovtunenko.sax.xml.parser.exceptions.SaxXmlParserException;
-import com.ylab.kovtunenko.sax.xml.parser.providers.InputPropertiesParserProvider;
+import com.ylab.kovtunenko.sax.filefinder.domain.ApplicationProperties;
+import com.ylab.kovtunenko.sax.filefinder.exceptions.SaxXmlParserException;
+import com.ylab.kovtunenko.sax.filefinder.providers.InputPropertiesParserProvider;
 
 public class InputPropertiesParserProviderTest {
     private InputPropertiesParserProvider parser;

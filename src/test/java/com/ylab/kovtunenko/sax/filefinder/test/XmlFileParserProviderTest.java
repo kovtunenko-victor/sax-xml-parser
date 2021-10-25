@@ -1,4 +1,4 @@
-package com.ylab.kovtunenko.sax.xml.parser.test;
+package com.ylab.kovtunenko.sax.filefinder.test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -12,11 +12,11 @@ import java.net.URISyntaxException;
 
 import org.junit.jupiter.api.Test;
 
-import com.ylab.kovtunenko.sax.xml.parser.domain.ApplicationProperties;
-import com.ylab.kovtunenko.sax.xml.parser.domain.Node;
-import com.ylab.kovtunenko.sax.xml.parser.exceptions.SaxXmlParserException;
-import com.ylab.kovtunenko.sax.xml.parser.providers.FileReaderProvider;
-import com.ylab.kovtunenko.sax.xml.parser.providers.XmlFileParserProvider;
+import com.ylab.kovtunenko.sax.filefinder.domain.ApplicationProperties;
+import com.ylab.kovtunenko.sax.filefinder.domain.Node;
+import com.ylab.kovtunenko.sax.filefinder.exceptions.SaxXmlParserException;
+import com.ylab.kovtunenko.sax.filefinder.providers.FileReaderProvider;
+import com.ylab.kovtunenko.sax.filefinder.providers.XmlFileParserProvider;
 
 public class XmlFileParserProviderTest {
     private XmlFileParserProvider parser;

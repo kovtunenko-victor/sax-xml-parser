@@ -1,10 +1,10 @@
-package com.ylab.kovtunenko.sax.xml.parser.test;
+package com.ylab.kovtunenko.sax.filefinder.test;
 
 import java.io.File;
 import java.net.URISyntaxException;
 
-import com.ylab.kovtunenko.sax.xml.parser.exceptions.SaxXmlParserException;
-import com.ylab.kovtunenko.sax.xml.parser.providers.FileReaderProvider;
+import com.ylab.kovtunenko.sax.filefinder.exceptions.SaxXmlParserException;
+import com.ylab.kovtunenko.sax.filefinder.providers.FileReaderProvider;
 
 public class ReaderProviderTestImpl extends FileReaderProvider {
     @Override
