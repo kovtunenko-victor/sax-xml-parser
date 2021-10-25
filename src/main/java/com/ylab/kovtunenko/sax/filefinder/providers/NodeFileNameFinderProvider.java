@@ -6,19 +6,19 @@ import com.ylab.kovtunenko.sax.filefinder.domain.ApplicationProperties;
 import com.ylab.kovtunenko.sax.filefinder.domain.Node;
 import com.ylab.kovtunenko.sax.filefinder.providers.builders.BuilderProvider;
 
-public class FileNameFinderProvider {
+public class NodeFileNameFinderProvider {
     private final ParserProvider<ApplicationProperties> propertiesParser;
-    private final BuilderProvider<XmlFileParserProvider> xmlParserBuilder;
-    private final BuilderProvider<NodeSearchProvider> xmlFinderBuilder;
+    private final BuilderProvider<XmlFileParserProvider> parserBuilder;
+    private final BuilderProvider<NodeSearchProvider> finderBuilder;
     private final ReaderProvider<File, String> reader;
     
-    public FileNameFinderProvider(ParserProvider<ApplicationProperties> propertiesParser
-            , BuilderProvider<XmlFileParserProvider> xmlParserBuilder
-            , BuilderProvider<NodeSearchProvider> xmlFinderBuilder
+    public NodeFileNameFinderProvider(ParserProvider<ApplicationProperties> propertiesParser
+            , BuilderProvider<XmlFileParserProvider> parserBuilder
+            , BuilderProvider<NodeSearchProvider> finderBuilder
             , ReaderProvider<File, String> reader) {
         this.propertiesParser = propertiesParser;  
-        this.xmlParserBuilder = xmlParserBuilder;
-        this.xmlFinderBuilder = xmlFinderBuilder;
+        this.parserBuilder = parserBuilder;
+        this.finderBuilder = finderBuilder;
         this.reader = reader;
     }
     
@@ -41,12 +41,12 @@ public class FileNameFinderProvider {
     }
     
     private Node getNode(ApplicationProperties appProps) {
-        ParserProvider<Node> xmlParser = xmlParserBuilder.addParam("ApplicationProperties", appProps).addParam("ReaderProvider", reader).build();
+        ParserProvider<Node> xmlParser = parserBuilder.addParam("ApplicationProperties", appProps).addParam("ReaderProvider", reader).build();
         return xmlParser.parse();
     }
     
     private String doSearch(ApplicationProperties appProps, Node node) {
-        SearchProvider<String, String> xmlFinder = xmlFinderBuilder.addParam("Node", node).build();
+        SearchProvider<String, String> xmlFinder = finderBuilder.addParam("Node", node).build();
         return xmlFinder.search(appProps.getSearchMask());
     }
 }
