@@ -75,6 +75,7 @@ public class XmlFileParserProvider implements ParserProvider<Node> {
             case CHILDREN:
                 buildNode();
                 level++;
+                
                 if(lastNode != null) {
                     indexNode = lastNode;
                 }
@@ -118,15 +119,12 @@ public class XmlFileParserProvider implements ParserProvider<Node> {
 
         private void buildNode() {
             if (indexNode == null) {
-                nodeBuilder.setLevel(0);
-                rootNode = nodeBuilder.build();
+                rootNode = nodeBuilder.setLevel(0).build();
                 indexNode = rootNode;
                 nodeBuilder = Node.builder();
             } else {
                  if (nodeBuilder.isInit()) {
-                    nodeBuilder.setLevel(level);
-                    nodeBuilder.setRoot(indexNode);
-                    lastNode = nodeBuilder.build();
+                    lastNode = nodeBuilder.setLevel(level).setRoot(indexNode).build();
                     indexNode.getChildren().add(lastNode);
                     nodeBuilder = Node.builder();
                 }
