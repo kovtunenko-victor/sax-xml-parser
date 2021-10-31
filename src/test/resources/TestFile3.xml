@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<node is-file="false">
+	<name>/</name>
+	<children>
+		<child is-file="false">
+			<name>dir-test</name>
+			<children>
+				<child is-file="false">
+					<name>dir-test1</name>
+					<children>
+						<child is-file="false">
+							<name>dir-test1-1</name>
+						</child>
+						<child is-file="false">
+							<name>dir-test2-1</name>
+						</child>
+					</children>
+				</child>
+				<child is-file="false">
+					<name>dir-test2</name>
+				</child>
+			</children>
+		</child>
+		<child is-file="true">
+			<name>file-09938329.pdf</name>
+		</child>
+	</children>
+</node>

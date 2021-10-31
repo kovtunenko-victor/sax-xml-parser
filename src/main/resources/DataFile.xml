@@ -8,7 +8,7 @@
 		<child is-file="false">
 			<name>dir-88971375</name>
 			<children>
-			    <child is-file="false">
+				<child is-file="false">
 					<name>dir-414754795</name>
 					<children>
 						<child is-file="true">
@@ -52,6 +52,28 @@
 							<name>file-1541224222.txt</name>
 						</child>
 					</children>
+				</child>
+				<child is-file="false">
+					<name>dir-test</name>
+					<children>
+						<child is-file="false">
+							<name>dir-test1</name>
+							<children>
+								<child is-file="false">
+									<name>dir-test1-1</name>
+								</child>
+								<child is-file="false">
+									<name>dir-test2-1</name>
+								</child>
+							</children>
+						</child>
+						<child is-file="false">
+							<name>dir-test2</name>
+						</child>
+					</children>
+				</child>
+				<child is-file="true">
+					<name>file-1236624789.cpp</name>
 				</child>
 			</children>
 		</child>

@@ -2,6 +2,8 @@ package com.ylab.kovtunenko.sax.filefinder.providers;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -12,30 +14,33 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import com.ylab.kovtunenko.sax.filefinder.domain.ApplicationProperties;
-import com.ylab.kovtunenko.sax.filefinder.domain.Node;
 import com.ylab.kovtunenko.sax.filefinder.exceptions.SaxXmlParserException;
 
-public class XmlFileParserProvider implements ParserProvider<Node> {
+public class XmlFileParserProvider implements ParserProvider<String> {
     private final ApplicationProperties appProps;
     private final ReaderProvider<File, String> reader;
-    
+
     public XmlFileParserProvider(ApplicationProperties appProps, ReaderProvider<File, String> reader) {
         this.appProps = appProps;
         this.reader = reader;
     }
 
     @Override
-    public Node parse() {
+    public String parse() {
+        if(reader == null) {
+            throw new SaxXmlParserException("Reader is null");
+        }
+        
         try {
             SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
             MySaxHandler handler = new MySaxHandler();
             saxParser.parse(reader.read(appProps.getFileName()), handler);
-            
-            if(handler.rootNode == null) {
+
+            if (handler.result == null) {
                 throw new SaxXmlParserException("Xml file not in format");
             }
-            
-            return handler.rootNode;
+
+            return handler.result.toString();
 
         } catch (IOException | SAXException | ParserConfigurationException | IllegalArgumentException ex) {
             throw new SaxXmlParserException("Xml file parse exception", ex);
@@ -48,41 +53,26 @@ public class XmlFileParserProvider implements ParserProvider<Node> {
         private static final String CHILDREN = "children";
         private static final String CHILD = "child";
 
+        private static final String SLASH = "/";
+        private static final String SLASH_IN_NAME_RAPLACE = "~";
+
+        private StringBuilder result;
+        private StringBuilder tempPath;
         private StringBuilder elementValue;
-        private Node.Builder nodeBuilder;
-
-        private Node rootNode;
-        private Node indexNode;
-        private Node lastNode;
-        
-        private long level = 0;
-
-        @Override
-        public void startDocument() throws SAXException {
-            nodeBuilder = Node.builder();
-        }
+        private boolean isFile;
 
         @Override
         public void startElement(String uri, String localName, String qName, Attributes attributes)
                 throws SAXException {
             switch (qName) {
             case NODE:
-                nodeBuilder.setIsFile(Boolean.parseBoolean(attributes.getValue("is-file")));
+                isFile = Boolean.parseBoolean(attributes.getValue("is-file"));
                 break;
             case NAME:
                 elementValue = new StringBuilder();
                 break;
-            case CHILDREN:
-                buildNode();
-                level++;
-                
-                if(lastNode != null) {
-                    indexNode = lastNode;
-                }
-                
-                break;
             case CHILD:
-                nodeBuilder.setIsFile(Boolean.parseBoolean(attributes.getValue("is-file")));
+                isFile = Boolean.parseBoolean(attributes.getValue("is-file"));
                 break;
             }
         }
@@ -91,19 +81,21 @@ public class XmlFileParserProvider implements ParserProvider<Node> {
         public void endElement(String uri, String localName, String qName) throws SAXException {
             switch (qName) {
             case NODE:
-                if (rootNode == null) {
-                    buildNode();
+                if (result == null) {
+                    result = new StringBuilder();
                 }
                 break;
             case CHILD:
-                buildNode();
+                if (!isFile) {
+                    remuveLastFolder();
+                }
                 break;
             case CHILDREN:
-                level--;
-                indexNode = indexNode.getRoot();
+                remuveLastFolder();
+                isFile = true;
                 break;
             case NAME:
-                nodeBuilder.setName(elementValue.toString());
+                getFilePath();
                 break;
             }
         }
@@ -117,17 +109,57 @@ public class XmlFileParserProvider implements ParserProvider<Node> {
             }
         }
 
-        private void buildNode() {
-            if (indexNode == null) {
-                rootNode = nodeBuilder.setLevel(0).build();
-                indexNode = rootNode;
-                nodeBuilder = Node.builder();
+        private void getFilePath() {
+            if (!isFile) {
+                setFolder();
             } else {
-                 if (nodeBuilder.isInit()) {
-                    lastNode = nodeBuilder.setLevel(level).setRoot(indexNode).build();
-                    indexNode.getChildren().add(lastNode);
-                    nodeBuilder = Node.builder();
+                if (result == null) {
+                    result = new StringBuilder();
                 }
+
+                if (doSearch(appProps.getSearchMask(), elementValue.toString())) {
+                    result.append(tempPath).append(elementValue.toString().replaceAll(SLASH, SLASH_IN_NAME_RAPLACE))
+                            .append("\r\n");
+                }
+            }
+        }
+
+        private boolean doSearch(String searchData, String searchValue) {
+            if (searchData == null) {
+                return true;
+            }
+            
+            Pattern pattern = Pattern.compile(searchData);
+            Matcher matcher = pattern.matcher(searchValue);
+
+            return matcher.find();
+        }
+
+        private void setFolder() {
+            if (tempPath == null) {
+                tempPath = new StringBuilder();
+            }
+
+            if (!elementValue.toString().equals(SLASH)) {
+                tempPath.append(elementValue.toString()).append(SLASH);
+            } else {
+                tempPath.append(elementValue.toString());
+            }
+        }
+
+        private void remuveLastFolder() {
+            int result = tempPath.length() - (getLastFolder(tempPath.toString()).length()) - 1;
+
+            if (result > 0) {
+                tempPath.setLength(result);
+            }
+        }
+
+        private String getLastFolder(String path) {
+            if (tempPath.toString().split(SLASH).length > 0) {
+                return tempPath.toString().split(SLASH)[tempPath.toString().split(SLASH).length - 1];
+            } else {
+                return SLASH;
             }
         }
     }
