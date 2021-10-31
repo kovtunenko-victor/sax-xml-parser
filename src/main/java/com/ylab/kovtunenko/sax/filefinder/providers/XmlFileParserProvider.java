@@ -27,6 +27,10 @@ public class XmlFileParserProvider implements ParserProvider<String> {
 
     @Override
     public String parse() {
+        if(reader == null) {
+            throw new SaxXmlParserException("Reader is null");
+        }
+        
         try {
             SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
             MySaxHandler handler = new MySaxHandler();
