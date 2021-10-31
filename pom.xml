@@ -65,7 +65,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>com.ylab.kovtunenko.sax.xml.parser.Application</mainClass>
+							<mainClass>com.ylab.kovtunenko.sax.filefinder.Application</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
@@ -77,7 +77,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>com.ylab.kovtunenko.sax.xml.parser.Application</mainClass>
+							<mainClass>com.ylab.kovtunenko.sax.filefinder.Application</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>
