@@ -11,18 +11,21 @@ import com.ylab.kovtunenko.sax.filefinder.domain.ApplicationProperties;
 import com.ylab.kovtunenko.sax.filefinder.exceptions.SaxXmlParserException;
 import com.ylab.kovtunenko.sax.filefinder.providers.FileReaderProvider;
 import com.ylab.kovtunenko.sax.filefinder.providers.XmlFileParserProvider;
+import com.ylab.kovtunenko.sax.filefinder.providers.builders.RegexSearchProviderBuilder;
 import com.ylab.kovtunenko.sax.filefinder.providers.builders.XmlFileParserProviderBuilder;
 
 public class XmlFileParserProviderBuilderTest {
     private XmlFileParserProviderBuilder builder;
     private ApplicationProperties appProps = mock(ApplicationProperties.class);
     private FileReaderProvider reader = mock(FileReaderProvider.class);
+    private RegexSearchProviderBuilder searchBuilder = mock(RegexSearchProviderBuilder.class);
     
     @Test
     public void buildMethodShuldReturnXmlFileParserProviderInstance() {
         builder = new XmlFileParserProviderBuilder();
         builder.addParam(XmlFileParserProviderBuilder.APPLICATION_PROPERTIES, appProps);
         builder.addParam(XmlFileParserProviderBuilder.READER_PROVIDER, reader);
+        builder.addParam(XmlFileParserProviderBuilder.SEARCH_PROVIDER_BUILDER, searchBuilder);
         
         XmlFileParserProvider parser = builder.build();
         

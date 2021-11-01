@@ -2,8 +2,6 @@ package com.ylab.kovtunenko.sax.filefinder.providers;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -15,22 +13,28 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import com.ylab.kovtunenko.sax.filefinder.domain.ApplicationProperties;
 import com.ylab.kovtunenko.sax.filefinder.exceptions.SaxXmlParserException;
+import com.ylab.kovtunenko.sax.filefinder.providers.builders.BuilderProvider;
+import com.ylab.kovtunenko.sax.filefinder.providers.builders.RegexSearchProviderBuilder;
 
 public class XmlFileParserProvider implements ParserProvider<String> {
     private final ApplicationProperties appProps;
     private final ReaderProvider<File, String> reader;
+    private final BuilderProvider<RegexSearchProvider> searchBuilder;
 
-    public XmlFileParserProvider(ApplicationProperties appProps, ReaderProvider<File, String> reader) {
+    public XmlFileParserProvider(ApplicationProperties appProps, 
+            ReaderProvider<File, String> reader,
+            BuilderProvider<RegexSearchProvider> searchBuilder) {
         this.appProps = appProps;
         this.reader = reader;
+        this.searchBuilder = searchBuilder;
     }
 
     @Override
     public String parse() {
-        if(reader == null) {
+        if (reader == null) {
             throw new SaxXmlParserException("Reader is null");
         }
-        
+
         try {
             SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
             MySaxHandler handler = new MySaxHandler();
@@ -124,15 +128,8 @@ public class XmlFileParserProvider implements ParserProvider<String> {
             }
         }
 
-        private boolean doSearch(String searchData, String searchValue) {
-            if (searchData == null) {
-                return true;
-            }
-            
-            Pattern pattern = Pattern.compile(searchData);
-            Matcher matcher = pattern.matcher(searchValue);
-
-            return matcher.find();
+        private boolean doSearch(String searchValue, String searchData) {
+            return searchBuilder.addParam(RegexSearchProviderBuilder.SEARCH_DATA, searchData).build().search(searchValue);
         }
 
         private void setFolder() {
