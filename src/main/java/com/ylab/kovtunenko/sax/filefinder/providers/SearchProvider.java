@@ -1,5 +1,5 @@
 package com.ylab.kovtunenko.sax.filefinder.providers;
 
-public interface SearchProvider<T> {
-    T search();
+public interface SearchProvider<T, V> {
+    T search(V searchValue);
 }

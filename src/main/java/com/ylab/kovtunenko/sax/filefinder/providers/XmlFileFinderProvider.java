@@ -5,23 +5,28 @@ import java.io.File;
 import com.ylab.kovtunenko.sax.filefinder.domain.ApplicationProperties;
 import com.ylab.kovtunenko.sax.filefinder.exceptions.SaxXmlParserException;
 import com.ylab.kovtunenko.sax.filefinder.providers.builders.BuilderProvider;
+import com.ylab.kovtunenko.sax.filefinder.providers.builders.XmlFileParserProviderBuilder;
 
-public class XmlFileFinderProvider implements SearchProvider<String> {
+public class XmlFileFinderProvider {
     private final ParserProvider<ApplicationProperties> propertiesParser;
     private final BuilderProvider<XmlFileParserProvider> parserBuilder;
+    private final BuilderProvider<RegexSearchProvider> finderBuilder;
     private final ReaderProvider<File, String> reader;
     
     public XmlFileFinderProvider(ParserProvider<ApplicationProperties> propertiesParser
             , BuilderProvider<XmlFileParserProvider> parserBuilder
+            , BuilderProvider<RegexSearchProvider> finderBuilder
             , ReaderProvider<File, String> reader) {
         this.propertiesParser = propertiesParser;  
         this.parserBuilder = parserBuilder;
+        this.finderBuilder = finderBuilder;
         this.reader = reader;
     }
     
-    public String search() {
+    public String parseAndSearch() {
         ApplicationProperties appProps = getApplicationProperties();
-        return doSearch(appProps);
+        ParserProvider<String> parser = getParser(appProps);
+        return parser.parse();
     }
     
     private ApplicationProperties getApplicationProperties() { 
@@ -32,12 +37,15 @@ public class XmlFileFinderProvider implements SearchProvider<String> {
         return propertiesParser.parse();
     }
     
-    private String doSearch(ApplicationProperties appProps) {
+    private ParserProvider<String> getParser(ApplicationProperties appProps) {
         if(parserBuilder == null) {
             throw new SaxXmlParserException("Xml parser builder is null");
         }
         
-        ParserProvider<String> xmlParser = parserBuilder.addParam("ApplicationProperties", appProps).addParam("ReaderProvider", reader).build();
-        return xmlParser.parse();
+        return parserBuilder
+                .addParam(XmlFileParserProviderBuilder.APPLICATION_PROPERTIES, appProps)
+                .addParam(XmlFileParserProviderBuilder.READER_PROVIDER, reader)
+                .addParam(XmlFileParserProviderBuilder.SEARCH_PROVIDER_BUILDER, finderBuilder)
+                .build();
     }
 }
