@@ -1,4 +1,4 @@
-package com.ylab.kovtunenko.sax.filefinder.test;
+package com.ylab.kovtunenko.sax.filefinder.providers.readers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -8,11 +8,11 @@ import java.io.File;
 
 import org.junit.jupiter.api.Test;
 
-import com.ylab.kovtunenko.sax.filefinder.exceptions.SaxXmlParserException;
-import com.ylab.kovtunenko.sax.filefinder.providers.FileReaderProvider;
+import com.ylab.kovtunenko.sax.filefinder.exceptions.FileFinderAppException;
+import com.ylab.kovtunenko.sax.filefinder.providers.impl.FileReader;
 
-public class FileReaderProviderTest {
-    private FileReaderProvider reader = new ReaderProviderTestImpl();
+public class FileReaderTest {
+    private FileReader reader = new FileReader();
     
     @Test
     public void readMethodShuldReturnFileByInputString( ) {
@@ -22,7 +22,7 @@ public class FileReaderProviderTest {
     
     @Test
     public void readMethodShuldRizeExceptionWhenFileNotFound( ) {    
-        Exception exception = assertThrows(SaxXmlParserException.class, () -> {
+        Exception exception = assertThrows(FileFinderAppException.class, () -> {
             reader.read("NoFile.xml");
         });
 
