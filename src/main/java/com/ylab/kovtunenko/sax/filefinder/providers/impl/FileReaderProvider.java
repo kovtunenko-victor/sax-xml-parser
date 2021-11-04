@@ -5,7 +5,7 @@ import java.io.File;
 import com.ylab.kovtunenko.sax.filefinder.exceptions.FileFinderAppException;
 import com.ylab.kovtunenko.sax.filefinder.providers.ReaderProvider;
 
-public class FileReader implements ReaderProvider<File, String> {
+public class FileReaderProvider implements ReaderProvider<File, String> {
     
     @Override
     public File read(String input) {

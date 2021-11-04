@@ -1,48 +1,40 @@
 package com.ylab.kovtunenko.sax.filefinder.providers.impl;
 
-import java.util.Arrays;
-
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-
-import com.ylab.kovtunenko.sax.filefinder.constants.GlobalConstants;
 import com.ylab.kovtunenko.sax.filefinder.domain.Arguments;
+import com.ylab.kovtunenko.sax.filefinder.domain.MaskType;
 import com.ylab.kovtunenko.sax.filefinder.exceptions.FileFinderAppException;
-import com.ylab.kovtunenko.sax.filefinder.providers.FactoryProvider;
 import com.ylab.kovtunenko.sax.filefinder.providers.ParserProvider;
 
-public class InputArgumentsParser implements ParserProvider<Arguments> {
-    private final String[] arguments;
+public class ArgumentsParserProvider implements ParserProvider<Arguments, String[]> {
     private final Options options;
-    private final FactoryProvider<RegexpSearchValueParser> searchValueParserBuilder;
+    private final ParserProvider<MaskType, String> searchValueParser;
     
-    public InputArgumentsParser(String[] arguments, FactoryProvider<RegexpSearchValueParser> searchValueParserBuilder) {
+    public ArgumentsParserProvider(ParserProvider<MaskType, String> searchValueParser) {
         options = new Options();
         initOptions(); 
-        this.searchValueParserBuilder = searchValueParserBuilder;
-        this.arguments = Arrays.copyOf(arguments, arguments.length);  
+        this.searchValueParser = searchValueParser;
     }
 
     @Override
-    public Arguments parse() {
+    public Arguments parse(String[] args) {
         Arguments arguments;
-        CommandLine cmd = parseArguments();
+        CommandLine cmd = parseArguments(args);
 
         if(cmd.getOptionValue("search") == null) {
             arguments = new Arguments(cmd.getOptionValue("file"));
         } else {
-            arguments = new Arguments(cmd.getOptionValue("file"), formatSearchValue(cmd.getOptionValue("search")));
+            arguments = new Arguments(cmd.getOptionValue("file")
+                    , cmd.getOptionValue("search")
+                    , searchValueParser.parse(cmd.getOptionValue("search")));
         }
         
         return arguments;
-    }
-    
-    private String formatSearchValue (String searchValue) {
-        return searchValueParserBuilder.addParam(GlobalConstants.SEARCH_DATA, searchValue).build().parse();
     }
     
     private void initOptions() {
@@ -56,12 +48,12 @@ public class InputArgumentsParser implements ParserProvider<Arguments> {
         options.addOption(search);
     }
     
-    private CommandLine parseArguments() {
+    private CommandLine parseArguments(String[] args) {
         CommandLineParser parser = new DefaultParser();
         CommandLine cmd;
 
         try {
-            cmd = parser.parse(options, arguments);
+            cmd = parser.parse(options, args);
             return cmd;
         } catch (ParseException ex) {
             throw new FileFinderAppException("Error when parse properties", ex);

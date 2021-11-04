@@ -9,10 +9,10 @@ import java.io.File;
 import org.junit.jupiter.api.Test;
 
 import com.ylab.kovtunenko.sax.filefinder.exceptions.FileFinderAppException;
-import com.ylab.kovtunenko.sax.filefinder.providers.impl.FileReader;
+import com.ylab.kovtunenko.sax.filefinder.providers.impl.FileReaderProvider;
 
 public class FileReaderTest {
-    private FileReader reader = new FileReader();
+    private FileReaderProvider reader = new FileReaderProvider();
     
     @Test
     public void readMethodShuldReturnFileByInputString( ) {
