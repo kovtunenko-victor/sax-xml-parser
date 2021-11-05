@@ -23,6 +23,10 @@ public class ArgumentsParserProvider implements ParserProvider<Arguments, String
 
     @Override
     public Arguments parse(String[] args) {
+        if(args == null) {
+            throw new FileFinderAppException("Incoming arguments is null");
+        }
+        
         Arguments arguments;
         CommandLine cmd = parseArguments(args);
 

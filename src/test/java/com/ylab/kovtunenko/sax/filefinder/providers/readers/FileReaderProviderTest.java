@@ -5,18 +5,20 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
+import java.net.URISyntaxException;
 
 import org.junit.jupiter.api.Test;
 
 import com.ylab.kovtunenko.sax.filefinder.exceptions.FileFinderAppException;
 import com.ylab.kovtunenko.sax.filefinder.providers.impl.FileReaderProvider;
 
-public class FileReaderTest {
-    private FileReaderProvider reader = new FileReaderProvider();
+public class FileReaderProviderTest {
+    private final FileReaderProvider reader = new FileReaderProvider();
     
     @Test
-    public void readMethodShuldReturnFileByInputString( ) {
-        File result = reader.read("DataFile.xml");
+    public void readMethodShuldReturnFileByInputString() throws URISyntaxException  {
+        String filePath = new File(this.getClass().getClassLoader().getResource("DataFile.xml").toURI()).getAbsolutePath();
+        File result = reader.read(filePath);
         assertEquals(result.exists(), true);
     }
     
