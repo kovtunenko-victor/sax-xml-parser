@@ -1,6 +1,6 @@
 package com.ylab.kovtunenko.sax.filefinder.handlers;
 
-import com.ylab.kovtunenko.sax.filefinder.domain.HandlerType;
+import com.ylab.kovtunenko.sax.filefinder.enums.HandlerType;
 import com.ylab.kovtunenko.sax.filefinder.exceptions.FileFinderAppException;
 import com.ylab.kovtunenko.sax.filefinder.providers.SearchProvider;
 

@@ -7,7 +7,7 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import com.ylab.kovtunenko.sax.filefinder.domain.Arguments;
-import com.ylab.kovtunenko.sax.filefinder.domain.MaskType;
+import com.ylab.kovtunenko.sax.filefinder.enums.MaskType;
 import com.ylab.kovtunenko.sax.filefinder.exceptions.FileFinderAppException;
 import com.ylab.kovtunenko.sax.filefinder.providers.ParserProvider;
 

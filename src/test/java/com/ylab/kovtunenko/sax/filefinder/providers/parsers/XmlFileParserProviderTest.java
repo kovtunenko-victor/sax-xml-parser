@@ -11,7 +11,7 @@ import java.io.File;
 import org.junit.jupiter.api.Test;
 
 import com.ylab.kovtunenko.sax.filefinder.domain.Arguments;
-import com.ylab.kovtunenko.sax.filefinder.domain.HandlerType;
+import com.ylab.kovtunenko.sax.filefinder.enums.HandlerType;
 import com.ylab.kovtunenko.sax.filefinder.exceptions.FileFinderAppException;
 import com.ylab.kovtunenko.sax.filefinder.providers.impl.FileReaderProvider;
 import com.ylab.kovtunenko.sax.filefinder.providers.impl.XmlFileParserProvider;

@@ -75,6 +75,7 @@ public class MySaxHandlerImpl extends MySaxHandler {
         }
     }
     
+    @Override
     public String getResult() {
         if (result == null) {
             throw new FileFinderAppException("Xml file not in format");

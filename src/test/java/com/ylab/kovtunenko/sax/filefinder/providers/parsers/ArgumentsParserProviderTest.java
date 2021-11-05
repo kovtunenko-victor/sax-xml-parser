@@ -9,14 +9,14 @@ import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.Test;
 
 import com.ylab.kovtunenko.sax.filefinder.domain.Arguments;
-import com.ylab.kovtunenko.sax.filefinder.domain.MaskType;
+import com.ylab.kovtunenko.sax.filefinder.enums.MaskType;
 import com.ylab.kovtunenko.sax.filefinder.exceptions.FileFinderAppException;
 import com.ylab.kovtunenko.sax.filefinder.providers.impl.ArgumentsParserProvider;
-import com.ylab.kovtunenko.sax.filefinder.providers.impl.SearchValueParser;
+import com.ylab.kovtunenko.sax.filefinder.providers.impl.SearchValueParserProvider;
 import com.ylab.kovtunenko.sax.filefinder.utils.TestUtils;
 
 public class ArgumentsParserProviderTest {
-    private SearchValueParser  searchValueParser = mock(SearchValueParser.class);
+    private SearchValueParserProvider  searchValueParser = mock(SearchValueParserProvider.class);
     private ArgumentsParserProvider argsParser;
     
     @Test

@@ -10,8 +10,8 @@ import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.SAXException;
 
 import com.ylab.kovtunenko.sax.filefinder.domain.Arguments;
-import com.ylab.kovtunenko.sax.filefinder.domain.HandlerType;
-import com.ylab.kovtunenko.sax.filefinder.domain.MaskType;
+import com.ylab.kovtunenko.sax.filefinder.enums.HandlerType;
+import com.ylab.kovtunenko.sax.filefinder.enums.MaskType;
 import com.ylab.kovtunenko.sax.filefinder.exceptions.FileFinderAppException;
 import com.ylab.kovtunenko.sax.filefinder.handlers.MySaxHandler;
 import com.ylab.kovtunenko.sax.filefinder.handlers.MySaxHandlerFactory;

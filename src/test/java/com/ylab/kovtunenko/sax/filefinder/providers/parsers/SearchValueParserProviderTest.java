@@ -6,12 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import com.ylab.kovtunenko.sax.filefinder.domain.MaskType;
+import com.ylab.kovtunenko.sax.filefinder.enums.MaskType;
 import com.ylab.kovtunenko.sax.filefinder.exceptions.FileFinderAppException;
-import com.ylab.kovtunenko.sax.filefinder.providers.impl.SearchValueParser;
+import com.ylab.kovtunenko.sax.filefinder.providers.impl.SearchValueParserProvider;
 
-public class SearchValueParserTest {
-    private final SearchValueParser parser = new SearchValueParser();
+public class SearchValueParserProviderTest {
+    private final SearchValueParserProvider parser = new SearchValueParserProvider();
     
     @Test
     public void parseMethodShuldReturnNameType() {
