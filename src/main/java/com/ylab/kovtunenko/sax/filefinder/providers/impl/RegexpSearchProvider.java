@@ -12,7 +12,7 @@ public class RegexpSearchProvider implements SearchProvider<String, String> {
         boolean result = checkInput(searchData, searchValue);
         
         if(!result) {
-            result = doSearch(searchData, searchValue);
+            result = doSearch(searchData, searchValue.replaceAll("'", ""));
             return result;
         } 
         

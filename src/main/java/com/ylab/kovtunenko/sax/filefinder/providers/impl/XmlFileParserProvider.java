@@ -10,30 +10,34 @@ import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.SAXException;
 
 import com.ylab.kovtunenko.sax.filefinder.domain.Arguments;
+import com.ylab.kovtunenko.sax.filefinder.domain.HandlerType;
+import com.ylab.kovtunenko.sax.filefinder.domain.MaskType;
 import com.ylab.kovtunenko.sax.filefinder.exceptions.FileFinderAppException;
 import com.ylab.kovtunenko.sax.filefinder.handlers.MySaxHandler;
+import com.ylab.kovtunenko.sax.filefinder.handlers.MySaxHandlerFactory;
 import com.ylab.kovtunenko.sax.filefinder.providers.ParserProvider;
 import com.ylab.kovtunenko.sax.filefinder.providers.ReaderProvider;
 import com.ylab.kovtunenko.sax.filefinder.providers.SearchProvider;
+import com.ylab.kovtunenko.sax.filefinder.providers.SearchProviderFactory;
 
-public class XmlFileParserProvider  implements ParserProvider<String, SearchProvider<String, String>> {
-    private final Arguments arguments;
+public class XmlFileParserProvider  implements ParserProvider<String, Arguments> {
+    private final HandlerType handlerType;
     private final ReaderProvider<File, String> reader;
 
-    public XmlFileParserProvider(Arguments arguments, ReaderProvider<File, String> reader) {
-        this.arguments = arguments;
+    public XmlFileParserProvider(HandlerType handlerType, ReaderProvider<File, String> reader) {
+        this.handlerType = handlerType;
         this.reader = reader;
     }
 
     @Override
-    public String parse(SearchProvider<String, String> searchProvider) {
+    public String parse(Arguments arguments) {
         if (reader == null) {
             throw new FileFinderAppException("Reader is null");
         }
 
         try {
             SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
-            MySaxHandler handler = new MySaxHandler(arguments.getSearchMask() ,searchProvider);
+            MySaxHandler handler = MySaxHandlerFactory.create(handlerType, arguments.getSearchMask(), getSearchProvider(arguments.getSearchMaskType()));
 
             saxParser.parse(reader.read(arguments.getFileName()), handler);
             
@@ -42,5 +46,9 @@ public class XmlFileParserProvider  implements ParserProvider<String, SearchProv
         } catch (IOException | SAXException | ParserConfigurationException | IllegalArgumentException ex) {
             throw new FileFinderAppException("Xml file parse exception", ex);
         }
-    } 
+    }
+    
+    public SearchProvider<String, String> getSearchProvider(MaskType maskType) {
+        return SearchProviderFactory.create(maskType);
+    }
 }

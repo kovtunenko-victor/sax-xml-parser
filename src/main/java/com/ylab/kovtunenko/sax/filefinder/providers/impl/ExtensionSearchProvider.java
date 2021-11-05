@@ -8,7 +8,7 @@ public class ExtensionSearchProvider extends RegexpSearchProvider implements Sea
         boolean result = checkInput(searchData, searchValue);
         
         if(!result) {
-            result = doSearch(searchData, ".+\\..*");
+            result = doSearch(searchData, searchValue.replaceAll("\\.", "\\\\\\.\\."));
             return result;
         } 
         
