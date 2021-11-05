@@ -34,6 +34,14 @@ public class XmlFileParserProvider  implements ParserProvider<String, Arguments>
         if (reader == null) {
             throw new FileFinderAppException("Reader is null");
         }
+        
+        if (handlerType == null) {
+            throw new FileFinderAppException("Handler type is null");
+        }
+        
+        if (arguments == null) {
+            throw new FileFinderAppException("Arguments is null");
+        }
 
         try {
             SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
