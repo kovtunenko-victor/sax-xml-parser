@@ -5,7 +5,7 @@ import com.ylab.kovtunenko.sax.filefinder.exceptions.FileFinderAppException;
 import com.ylab.kovtunenko.sax.filefinder.providers.SearchProvider;
 
 public class MySaxHandlerFactory {
-    public static MySaxHandler create(HandlerType handlerType, String searchMask, SearchProvider<String, String> searchProvider) {
+    public static MySaxHandler newInstance(HandlerType handlerType, String searchMask, SearchProvider<String, String> searchProvider) {
         if (handlerType == null) {
             throw new FileFinderAppException("Handler type is null");
         }

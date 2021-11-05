@@ -7,7 +7,7 @@ import com.ylab.kovtunenko.sax.filefinder.providers.impl.NameSearchProvider;
 import com.ylab.kovtunenko.sax.filefinder.providers.impl.RegexpSearchProvider;
 
 public class SearchProviderFactory {
-    public static SearchProvider<String, String> create(MaskType maskType) {
+    public static SearchProvider<String, String> newInstance(MaskType maskType) {
         if (maskType == null) {
             throw new FileFinderAppException("Mask type is null");
         }

@@ -45,7 +45,7 @@ public class XmlFileParserProvider  implements ParserProvider<String, Arguments>
 
         try {
             SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
-            MySaxHandler handler = MySaxHandlerFactory.create(handlerType, arguments.getSearchMask(), getSearchProvider(arguments.getSearchMaskType()));
+            MySaxHandler handler = MySaxHandlerFactory.newInstance(handlerType, arguments.getSearchMask(), getSearchProvider(arguments.getSearchMaskType()));
 
             saxParser.parse(reader.read(arguments.getFileName()), handler);
             
@@ -57,6 +57,6 @@ public class XmlFileParserProvider  implements ParserProvider<String, Arguments>
     }
     
     public SearchProvider<String, String> getSearchProvider(MaskType maskType) {
-        return SearchProviderFactory.create(maskType);
+        return SearchProviderFactory.newInstance(maskType);
     }
 }
