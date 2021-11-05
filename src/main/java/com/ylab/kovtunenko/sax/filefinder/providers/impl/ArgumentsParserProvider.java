@@ -27,6 +27,10 @@ public class ArgumentsParserProvider implements ParserProvider<Arguments, String
             throw new FileFinderAppException("Incoming arguments is null");
         }
         
+        if(searchValueParser == null) {
+            throw new FileFinderAppException("Search value parser is null");
+        }
+        
         Arguments arguments;
         CommandLine cmd = parseArguments(args);
 
