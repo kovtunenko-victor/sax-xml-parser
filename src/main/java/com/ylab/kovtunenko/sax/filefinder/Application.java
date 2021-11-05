@@ -1,18 +1,21 @@
 package com.ylab.kovtunenko.sax.filefinder;
 
-import com.ylab.kovtunenko.sax.filefinder.providers.XmlFileFinderProvider;
-import com.ylab.kovtunenko.sax.filefinder.providers.FileReaderProvider;
-import com.ylab.kovtunenko.sax.filefinder.providers.InputPropertiesParserProvider;
-import com.ylab.kovtunenko.sax.filefinder.providers.builders.RegexSearchProviderBuilder;
-import com.ylab.kovtunenko.sax.filefinder.providers.builders.XmlFileParserProviderBuilder;
+import com.ylab.kovtunenko.sax.filefinder.domain.Arguments;
+import com.ylab.kovtunenko.sax.filefinder.enums.HandlerType;
+import com.ylab.kovtunenko.sax.filefinder.providers.FileFinderProvider;
+import com.ylab.kovtunenko.sax.filefinder.providers.ParserProvider;
+import com.ylab.kovtunenko.sax.filefinder.providers.impl.ArgumentsParserProvider;
+import com.ylab.kovtunenko.sax.filefinder.providers.impl.FileReaderProvider;
+import com.ylab.kovtunenko.sax.filefinder.providers.impl.SearchValueParserProvider;
+import com.ylab.kovtunenko.sax.filefinder.providers.impl.XmlFileParserProvider;
 
 public class Application {
     public static void main(String[] args) {
-        XmlFileFinderProvider provider = new XmlFileFinderProvider(new InputPropertiesParserProvider(args)
-                , new XmlFileParserProviderBuilder() 
-                , new RegexSearchProviderBuilder() 
-                , new FileReaderProvider());
+        ParserProvider<Arguments, String[]> argsParser = new ArgumentsParserProvider(new SearchValueParserProvider());
+        ParserProvider<String, Arguments> xmlParser = new XmlFileParserProvider(HandlerType.DEFAULT, new FileReaderProvider());
         
-        System.out.println(provider.parseAndSearch());
+        FileFinderProvider finder = new FileFinderProvider(argsParser, xmlParser);
+        
+        System.out.println(finder.find(args));
     }
 }
