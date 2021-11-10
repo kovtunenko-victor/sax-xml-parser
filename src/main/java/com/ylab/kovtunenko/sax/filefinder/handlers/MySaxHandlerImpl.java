@@ -15,9 +15,7 @@ public class MySaxHandlerImpl extends MySaxHandler {
     private static final String NAME = "NAME";
     private static final String CHILDREN = "CHILDREN";
     private static final String CHILD = "CHILD";
-    
-    
-    
+
     private StringBuilder result;
     private List<String> tempPath;
     private StringBuilder elementValue;
@@ -28,16 +26,17 @@ public class MySaxHandlerImpl extends MySaxHandler {
     }
 
     @Override
-    public void startElement(String uri, String localName, String qName, Attributes attributes)
-            throws SAXException {
+    public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         switch (qName.toUpperCase()) {
         case NODE:
+            checkIsFile(attributes);
             isFile = Boolean.parseBoolean(attributes.getValue("is-file"));
             break;
         case NAME:
             elementValue = new StringBuilder();
             break;
         case CHILD:
+            checkIsFile(attributes);
             isFile = Boolean.parseBoolean(attributes.getValue("is-file"));
             break;
         }
@@ -74,13 +73,13 @@ public class MySaxHandlerImpl extends MySaxHandler {
             elementValue.append(ch, start, length);
         }
     }
-    
+
     @Override
     public String getResult() {
         if (result == null) {
             throw new FileFinderAppException("Xml file not in format");
         }
-        
+
         return result.toString();
     }
 
@@ -89,9 +88,8 @@ public class MySaxHandlerImpl extends MySaxHandler {
             if (result == null) {
                 result = new StringBuilder();
             }
-
             if (searchProvider.search(elementValue.toString(), searchMask)) {
-                result.append(getTempPath()).append(elementValue.toString()).append("\r\n");
+                result.append(getTempPath()).append(elementValue.toString()).append(GlobalConstants.NEW_LINE);
             }
         } else {
             insertFolder();
@@ -104,12 +102,16 @@ public class MySaxHandlerImpl extends MySaxHandler {
         }
 
         if (!elementValue.toString().equals(GlobalConstants.SLASH)) {
-            tempPath.add(elementValue.toString());
+            if(elementValue.toString().equals(GlobalConstants.EMPTY_STRING)) {
+                tempPath.add(GlobalConstants.NULL_STRING);
+            } else {
+                tempPath.add(elementValue.toString());
+            }
         }
     }
 
     private void remuveLastFolder() {
-        if(tempPath.size() > 0) {
+        if (tempPath.size() > 0) {
             tempPath.remove(tempPath.size() - 1);
         }
     }
@@ -118,10 +120,14 @@ public class MySaxHandlerImpl extends MySaxHandler {
         StringBuilder result = new StringBuilder();
         result.append(GlobalConstants.SLASH);
 
-        for (String item : tempPath) {
-            result.append(item).append(GlobalConstants.SLASH);
-        }
+        tempPath.forEach(pathItem -> result.append(pathItem).append(GlobalConstants.SLASH));
 
         return result.toString();
+    }
+    
+    private void checkIsFile(Attributes attributes) {
+        if (attributes.getValue("is-file") == null) {
+            throw new FileFinderAppException("Is-file attribute is not set");
+        }
     }
 }

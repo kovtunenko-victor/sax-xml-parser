@@ -44,7 +44,11 @@ public class XmlFileParserProvider  implements ParserProvider<String, Arguments>
         }
 
         try {
-            SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
+            SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+            saxParserFactory.setValidating(false);
+            saxParserFactory.setNamespaceAware(false);
+            SAXParser saxParser = saxParserFactory.newSAXParser();
+            
             MySaxHandler handler = MySaxHandlerFactory.newInstance(handlerType, arguments.getSearchMask(), getSearchProvider(arguments.getSearchMaskType()));
 
             saxParser.parse(reader.read(arguments.getFileName()), handler);
