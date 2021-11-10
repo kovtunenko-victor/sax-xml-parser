@@ -15,21 +15,33 @@ import com.ylab.kovtunenko.sax.filefinder.providers.impl.RegexpSearchProvider;
 
 public class MySaxHandlerImplTest {
     private final RegexpSearchProvider searchProvider = mock(RegexpSearchProvider.class);
-    private final String mask = ".+";
+    private final static String MASK = ".+";
     private final Attributes attributes = mock(Attributes.class);
     private MySaxHandlerImpl handler;
     
     
     @Test
     public void getResultMethodShuldReturnResultData() throws SAXException {
-        emulateEvents();
-        assertEquals(handler.getResult(), "/file-0001\r\n");
+        emulateEvents("dir-0001", false);
+        assertEquals(handler.getResult(), "/dir-0001/file-0003.xlsx\r\n/file-0001.xlsx\r\n/file-0002.xlsx\r\n");
+    }
+    
+    @Test
+    public void getResultMethodShuldReturnResultDataWithChildNameEmpty() throws SAXException {
+        emulateEvents("dir-0001", true);
+        assertEquals(handler.getResult(), "/dir-0001/file-0003.xlsx\r\n/file-0002.xlsx\r\n");
+    }
+    
+    @Test
+    public void getResultMethodShuldReturnResultDataWithChildNameExists() throws SAXException {
+        emulateEvents("", true);
+        assertEquals(handler.getResult(), "/null/file-0003.xlsx\r\n/file-0002.xlsx\r\n");
     }
     
     @Test
     public void getResultMethodShuldRizeExceptionWhenXmlNotInFormat() throws SAXException {
         Exception exception = assertThrows(FileFinderAppException.class, () -> {
-            handler = new MySaxHandlerImpl(mask, searchProvider);
+            handler = new MySaxHandlerImpl(MASK, searchProvider);
             handler.getResult();
         });
 
@@ -39,9 +51,11 @@ public class MySaxHandlerImplTest {
         assertTrue(actualMessage.contains(expectedMessage));
     }
     
-    private void emulateEvents() throws SAXException {
-        when(searchProvider.search("file-0001", ".+")).thenReturn(true);
-        handler = new MySaxHandlerImpl(mask, searchProvider);
+    private void emulateEvents(String dirName, boolean disableName) throws SAXException {
+        when(searchProvider.search("file-0001.xlsx", MASK)).thenReturn(true);
+        when(searchProvider.search("file-0002.xlsx", MASK)).thenReturn(true);
+        when(searchProvider.search("file-0003.xlsx", MASK)).thenReturn(true);
+        handler = new MySaxHandlerImpl(MASK, searchProvider);
         
         emulateStartElement("node", false);
         emulateStartElement("name");
@@ -50,12 +64,28 @@ public class MySaxHandlerImplTest {
         emulateStartElement("children");
         emulateStartElement("child", false);
         emulateStartElement("name");
-        emulateCharacters("dir-0001");
+        emulateCharacters(dirName);
         emulateEndElement("name");
+        emulateStartElement("children");
+        emulateStartElement("child", true);
+        emulateStartElement("name");
+        emulateCharacters("file-0003.xlsx");
+        emulateEndElement("name");
+        emulateEndElement("child");
+        emulateEndElement("children");
+        emulateEndElement("child");
+        emulateStartElement("child", true);
+        
+        if(disableName != true) {
+            emulateStartElement("name");
+            emulateCharacters("file-0001.xlsx");
+            emulateEndElement("name");
+        }
+        
         emulateEndElement("child");
         emulateStartElement("child", true);
         emulateStartElement("name");
-        emulateCharacters("file-0001");
+        emulateCharacters("file-0002.xlsx");
         emulateEndElement("name");
         emulateEndElement("child");
         emulateEndElement("children");

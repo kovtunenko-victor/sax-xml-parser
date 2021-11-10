@@ -10,7 +10,7 @@ public class Arguments {
     
     public Arguments(String fileName) {
         this.fileName = fileName;
-        this.searchMask = GlobalConstants.EMPTY_LINE;
+        this.searchMask = GlobalConstants.EMPTY_STRING;
         this.searchMaskType = MaskType.NO_MASK;
     }
     
