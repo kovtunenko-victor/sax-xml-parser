@@ -1,4 +1,4 @@
-package com.ylab.kovtunenko.sax.filefinder.utils;
+package com.ylab.kovtunenko.xml.filefinder.utils;
 
 import java.io.File;
 import java.net.URISyntaxException;

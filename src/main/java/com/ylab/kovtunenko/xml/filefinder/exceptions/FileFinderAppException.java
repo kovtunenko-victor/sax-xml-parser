@@ -1,4 +1,4 @@
-package com.ylab.kovtunenko.sax.filefinder.exceptions;
+package com.ylab.kovtunenko.xml.filefinder.exceptions;
 
 public class FileFinderAppException extends RuntimeException { 
     private static final long serialVersionUID = 1L;

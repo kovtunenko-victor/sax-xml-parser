@@ -1,7 +1,7 @@
-package com.ylab.kovtunenko.sax.filefinder.domain;
+package com.ylab.kovtunenko.xml.filefinder.domain;
 
-import com.ylab.kovtunenko.sax.filefinder.constants.GlobalConstants;
-import com.ylab.kovtunenko.sax.filefinder.constants.GlobalConstants.MaskType;
+import com.ylab.kovtunenko.xml.filefinder.constants.GlobalConstants;
+import com.ylab.kovtunenko.xml.filefinder.constants.GlobalConstants.MaskType;
 
 public class Arguments {
     private final String fileName;
