@@ -10,7 +10,6 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
 import com.ylab.kovtunenko.xml.filefinder.constants.GlobalConstants.MaskType;
-import com.ylab.kovtunenko.xml.filefinder.domain.Arguments;
 import com.ylab.kovtunenko.xml.filefinder.exceptions.FileFinderAppException;
 
 public class ArgumentsParser {

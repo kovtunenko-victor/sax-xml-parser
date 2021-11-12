@@ -11,12 +11,7 @@ public class ComparatorFactory {
 
         switch (maskType) {
             case NO_MASK:
-                return new Comparator() {
-                    @Override
-                    public boolean compare(String searchData) {
-                        return true;
-                    }
-                };
+                return new EmptyComparator();
             case MASK:
                 return new MaskComparator();
             case REGEXP:

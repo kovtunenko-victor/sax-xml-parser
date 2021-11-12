@@ -9,21 +9,18 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.SAXException;
 
+import com.ylab.kovtunenko.xml.filefinder.argument.Arguments;
 import com.ylab.kovtunenko.xml.filefinder.comparator.Comparator;
 import com.ylab.kovtunenko.xml.filefinder.comparator.ComparatorFactory;
 import com.ylab.kovtunenko.xml.filefinder.constants.GlobalConstants.MaskType;
-import com.ylab.kovtunenko.xml.filefinder.domain.Arguments;
 import com.ylab.kovtunenko.xml.filefinder.exceptions.FileFinderAppException;
 
 public class SaxParser {
-    public String parse(Arguments arguments) {
+    public void parse(Arguments arguments) {
         try {
             SAXParser saxParser = buildSaxParser();
             NodeParser handler = new NodeParser(getComparator(arguments.getSearchMask(), arguments.getSearchMaskType()));
             saxParser.parse(readFile(arguments.getFileName()), handler);
-            
-            return handler.getResult();
-
         } catch (IOException | SAXException | ParserConfigurationException | IllegalArgumentException ex) {
             throw new FileFinderAppException("Xml file parse exception", ex);
         }
@@ -49,7 +46,7 @@ public class SaxParser {
     
     private Comparator getComparator(String mask, MaskType maskType) {
         Comparator comparator = ComparatorFactory.newInstance(maskType);
-        comparator.setMask(mask);    
+        comparator.setSearchValue(mask);    
         
         return comparator;
     }
