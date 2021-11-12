@@ -4,7 +4,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import com.ylab.kovtunenko.xml.filefinder.comparator.Comparator;
+import com.ylab.kovtunenko.xml.filefinder.comparators.Comparator;
 import com.ylab.kovtunenko.xml.filefinder.constants.GlobalConstants;
 
 
@@ -45,5 +45,9 @@ public class NodeParser extends DefaultHandler {
     @Override
     public void characters(char ch[], int start, int length) throws SAXException {
         elementValue = new String(ch, start, length);
+    }
+    
+    public String getResult() {
+        return comparator.getResult();
     }
 }

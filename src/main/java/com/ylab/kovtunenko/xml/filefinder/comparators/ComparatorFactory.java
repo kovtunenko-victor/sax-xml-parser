@@ -1,4 +1,4 @@
-package com.ylab.kovtunenko.xml.filefinder.comparator;
+package com.ylab.kovtunenko.xml.filefinder.comparators;
 
 import com.ylab.kovtunenko.xml.filefinder.constants.GlobalConstants.MaskType;
 import com.ylab.kovtunenko.xml.filefinder.exceptions.FileFinderAppException;

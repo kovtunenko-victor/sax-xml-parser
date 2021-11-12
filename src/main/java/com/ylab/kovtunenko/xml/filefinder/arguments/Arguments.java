@@ -1,4 +1,4 @@
-package com.ylab.kovtunenko.xml.filefinder.argument;
+package com.ylab.kovtunenko.xml.filefinder.arguments;
 
 import com.ylab.kovtunenko.xml.filefinder.constants.GlobalConstants;
 import com.ylab.kovtunenko.xml.filefinder.constants.GlobalConstants.MaskType;

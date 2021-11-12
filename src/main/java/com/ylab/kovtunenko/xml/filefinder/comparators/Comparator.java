@@ -1,4 +1,4 @@
-package com.ylab.kovtunenko.xml.filefinder.comparator;
+package com.ylab.kovtunenko.xml.filefinder.comparators;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,7 @@ public abstract class Comparator {
     protected String searchValue;
     protected boolean isFile;
     protected List<String> tempPath;
+    protected final StringBuilder result = new StringBuilder();
     
     public abstract boolean compare(String  searchData);
     
@@ -25,10 +26,14 @@ public abstract class Comparator {
         return isFile;
     }
     
+    public String getResult() {
+        return result.toString();
+    }
+    
     public void insert(String elementValue) {
         if (isFile) {
             if (compare(elementValue)) {
-                printFilePath(getTempPath() + elementValue);
+                saveFilePath(getTempPath() + elementValue);
             }
         } else {
             insertFolder(elementValue);
@@ -53,8 +58,8 @@ public abstract class Comparator {
         return false;
     }
     
-    private void printFilePath(String filePath) {
-        System.out.println(filePath);
+    private void saveFilePath(String filePath) {
+        result.append(filePath).append(System.lineSeparator());
     }
 
     private void insertFolder(String elementValue) {
@@ -62,7 +67,7 @@ public abstract class Comparator {
             tempPath = new ArrayList<>();
         }
 
-        if (!elementValue.equals(GlobalConstants.SLASH)) {
+        if (elementValue!= null && !elementValue.equals(GlobalConstants.SLASH)) {
             if(elementValue.equals(GlobalConstants.EMPTY_STRING)) {
                 tempPath.add(GlobalConstants.NULL_STRING);
             } else {

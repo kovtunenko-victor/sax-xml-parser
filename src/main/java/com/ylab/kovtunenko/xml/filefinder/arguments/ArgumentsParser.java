@@ -1,4 +1,4 @@
-package com.ylab.kovtunenko.xml.filefinder.argument;
+package com.ylab.kovtunenko.xml.filefinder.arguments;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,7 +32,7 @@ public class ArgumentsParser {
             arguments = new Arguments(cmd.getOptionValue("file"));
         } else {
             arguments = new Arguments(cmd.getOptionValue("file")
-                    , cmd.getOptionValue("search")
+                    , cmd.getOptionValue("search").replaceAll("'", "")
                     , getMaskType(cmd.getOptionValue("search")));
         }
         
@@ -63,8 +63,14 @@ public class ArgumentsParser {
     }
     
     private MaskType getMaskType(String maskValue) {
-        Matcher matcher = Pattern.compile(".*[\\*].*").matcher(maskValue);
+        Matcher matcher;
         
+        matcher = Pattern.compile("'.+'").matcher(maskValue);
+        if (matcher.find()) {
+            return MaskType.REGEXP;
+        }
+        
+        matcher = Pattern.compile(".*[\\*].*").matcher(maskValue);
         if (matcher.find()) {
             return MaskType.MASK;
         }

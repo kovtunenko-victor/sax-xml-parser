@@ -13,6 +13,6 @@ public interface GlobalConstants {
     public static final String IS_FILE = "is-file";
     
     public enum MaskType {
-        NO_MASK, REGEXP, MASK;
+        NO_MASK, REGEXP, MASK, UNKNOWN;
     }
 }

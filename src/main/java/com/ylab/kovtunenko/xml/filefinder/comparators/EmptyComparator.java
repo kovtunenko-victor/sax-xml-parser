@@ -1,4 +1,4 @@
-package com.ylab.kovtunenko.xml.filefinder.comparator;
+package com.ylab.kovtunenko.xml.filefinder.comparators;
 
 public class EmptyComparator extends Comparator {
     

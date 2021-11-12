@@ -1,4 +1,4 @@
-package com.ylab.kovtunenko.xml.filefinder.comparator;
+package com.ylab.kovtunenko.xml.filefinder.comparators;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
