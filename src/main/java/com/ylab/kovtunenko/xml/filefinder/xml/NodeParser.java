@@ -6,7 +6,6 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import com.ylab.kovtunenko.xml.filefinder.comparator.Comparator;
 import com.ylab.kovtunenko.xml.filefinder.constants.GlobalConstants;
-import com.ylab.kovtunenko.xml.filefinder.exceptions.FileFinderAppException;
 
 
 public class NodeParser extends DefaultHandler {
@@ -19,13 +18,8 @@ public class NodeParser extends DefaultHandler {
     
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-        switch (qName.toUpperCase()) {
-        case GlobalConstants.NODE:
-            checkIsFile(attributes);
-            break;
-        case GlobalConstants.CHILD:
-            checkIsFile(attributes);
-            break;
+        if (attributes.getValue(GlobalConstants.IS_FILE) != null) {
+            comparator.setIsFile(Boolean.parseBoolean(attributes.getValue(GlobalConstants.IS_FILE)));
         }
     }
 
@@ -51,13 +45,5 @@ public class NodeParser extends DefaultHandler {
     @Override
     public void characters(char ch[], int start, int length) throws SAXException {
         elementValue = new String(ch, start, length);
-    }
-
-    private void checkIsFile(Attributes attributes) {
-        if (attributes.getValue(GlobalConstants.IS_FILE) == null) {
-            throw new FileFinderAppException("Is-file attribute is not set");
-        } else {
-            comparator.setIsFile(Boolean.parseBoolean(attributes.getValue(GlobalConstants.IS_FILE)));
-        }
     }
 }

@@ -16,7 +16,7 @@ import com.ylab.kovtunenko.xml.filefinder.constants.GlobalConstants.MaskType;
 import com.ylab.kovtunenko.xml.filefinder.exceptions.FileFinderAppException;
 
 public class SaxParser {
-    public void parse(Arguments arguments) {
+    public SaxParser(Arguments arguments) {
         try {
             SAXParser saxParser = buildSaxParser();
             NodeParser handler = new NodeParser(getComparator(arguments.getSearchMask(), arguments.getSearchMaskType()));

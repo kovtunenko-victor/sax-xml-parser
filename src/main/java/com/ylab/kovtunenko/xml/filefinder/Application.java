@@ -9,7 +9,7 @@ public class Application {
     public static void main(String[] args) {
         try {
             Arguments arguments = new ArgumentsParser().parse(args);
-            new SaxParser().parse(arguments);
+            new SaxParser(arguments);
         } catch (FileFinderAppException ex) {
             System.out.println(ex.getMessage());
         }
