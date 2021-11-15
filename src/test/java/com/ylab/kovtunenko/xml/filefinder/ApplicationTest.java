@@ -35,20 +35,7 @@ public class ApplicationTest {
     }
     
     @Test
-    public void mainMethodShouldReturnOnlyFindedFilesByMaskComparator() {
-        String filePath = TestUtils.getResourceFilePath("DataFile.xml");
-        
-        Arguments arguments = new ArgumentsParser().parse(new String[] {"-f", filePath, "-s", "*.java"});
-        String result = new SaxParser().parse(arguments);
-        
-        String expected = "/dir-88971375/dir-414754795/file-88874222.java" + System.lineSeparator()
-                        + "/dir-88971375/file-9738721998.java" + System.lineSeparator();
-        
-        assertEquals(expected, result);
-    }
-    
-    @Test
-    public void mainMethodShouldReturnOnlyFindedFilesByRegexpComparator() {
+    public void mainMethodShouldReturnOnlyFindedFilesByFixedName() {
         String filePath = TestUtils.getResourceFilePath("DataFile.xml");
         
         Arguments arguments = new ArgumentsParser().parse(new String[] {"-f", filePath, "-s", "file-12321321.rtf"});
@@ -60,7 +47,20 @@ public class ApplicationTest {
     }
     
     @Test
-    public void mainMethodShouldReturnOnlyFindedFilesByRegexpComparatorSecondVersion() {
+    public void mainMethodShouldReturnOnlyFindedFilesByMaskComparator() {
+        String filePath = TestUtils.getResourceFilePath("DataFile.xml");
+        
+        Arguments arguments = new ArgumentsParser().parse(new String[] {"-f", filePath, "-s", "*.java"});
+        String result = new SaxParser().parse(arguments);
+        
+        String expected = "/dir-88971375/dir-414754795/file-88874222.java" + System.lineSeparator()
+                        + "/dir-88971375/file-9738721998.java" + System.lineSeparator();
+        
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void mainMethodShouldReturnOnlyFindedFilesByRegexpComparator() {
         String filePath = TestUtils.getResourceFilePath("DataFile.xml");
         
         Arguments arguments = new ArgumentsParser().parse(new String[] {"-f", filePath, "-S", ".*?[a-z]{4}-\\d+.\\.[a-z]+"});
