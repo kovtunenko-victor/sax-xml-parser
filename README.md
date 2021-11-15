@@ -18,15 +18,15 @@ xml_file - это путь к предоставленному XML-файлу; i
 Дальше можно запустить 
 
 ```bash
-java -jar sax-xml-parser-0.0.1-SNAPSHOT-jar-with-dependencies.jar -f <xml_file> -s <input> 
+java -jar sax-xml-parser-0.0.1-SNAPSHOT-jar-with-dependencies.jar -f <xml_file> -s(S) <input> 
 ```
 
 где:
 **-f xml_file** - обязательный параметр, если будет не задан то будет вызвано исключение. Можно указать в качестве аргумента -f DataFile.xml, этот файл можно взять из resources.
 
-**-s input** - реализовано 3 варианта задания фильтра: 
-1. по маске в формате asd*.ext; 
-2. regexp пример '.*?[a-z]{4}-\d+\.[a-z]+'. Одинарные кавычки обязательны.
+**-s(S) input** - реализовано 3 варианта задания фильтра: 
+1. по маске в формате asd*.ext (использовать параметр -s)  
+2. regexp пример .*?[a-z]{4}-\d+\.[a-z]+ (использовать параметр -S)
 
 ### Тесты
 1. Сделан общий ApplicationTest 
