@@ -18,18 +18,9 @@ public class ApplicationTest {
         Arguments arguments = new ArgumentsParser().parse(new String[] {"-f", filePath});
         String result = new SaxParser().parse(arguments);
         
-        String expected = "/file-77194797.xml" + System.lineSeparator()
-                        + "/dir-88971375/dir-414754795/file-09938329.pdf" + System.lineSeparator()
-                        + "/dir-88971375/dir-414754795/file-88874222.java" + System.lineSeparator()
-                        + "/dir-88971375/dir-414754795/file-33399233.dbf" + System.lineSeparator()
-                        + "/dir-88971375/dir-414754795/dir-67567567/file-12321321.rtf" + System.lineSeparator()
-                        + "/dir-88971375/dir-414754795/file-12333233.xml" + System.lineSeparator()
-                        + "/dir-88971375/file-9738721998.java" + System.lineSeparator()
-                        + "/dir-88971375/file-777939833.doc" + System.lineSeparator()
-                        + "/dir-88971375/dir-219753795/file-974842197.xhtml" + System.lineSeparator()
-                        + "/dir-88971375/dir-219753795/file-1541224222.txt" + System.lineSeparator()
-                        + "/dir-88971375/file-1236624789.cpp" + System.lineSeparator()
-                        + "/file-2576624200.xlsx" + System.lineSeparator();
+        String expected = "/file-776194140.xml" + System.lineSeparator()
+                        + "/dir-880176375/file-1073842118.java" + System.lineSeparator()
+                        + "/dir-880176375/dir-2145307015/file-1498940214.xhtml" + System.lineSeparator();
         
         assertEquals(expected, result);
     }
@@ -38,10 +29,10 @@ public class ApplicationTest {
     public void mainMethodShouldReturnOnlyFindedFilesByFixedName() {
         String filePath = TestUtils.getResourceFilePath("DataFile.xml");
         
-        Arguments arguments = new ArgumentsParser().parse(new String[] {"-f", filePath, "-s", "file-12321321.rtf"});
+        Arguments arguments = new ArgumentsParser().parse(new String[] {"-f", filePath, "-s", "file-1498940214.xhtml"});
         String result = new SaxParser().parse(arguments);
         
-        String expected = "/dir-88971375/dir-414754795/dir-67567567/file-12321321.rtf" + System.lineSeparator();
+        String expected = "/dir-880176375/dir-2145307015/file-1498940214.xhtml" + System.lineSeparator();
         
         assertEquals(expected, result);
     }
@@ -53,8 +44,7 @@ public class ApplicationTest {
         Arguments arguments = new ArgumentsParser().parse(new String[] {"-f", filePath, "-s", "*.java"});
         String result = new SaxParser().parse(arguments);
         
-        String expected = "/dir-88971375/dir-414754795/file-88874222.java" + System.lineSeparator()
-                        + "/dir-88971375/file-9738721998.java" + System.lineSeparator();
+        String expected = "/dir-880176375/file-1073842118.java" + System.lineSeparator();
         
         assertEquals(expected, result);
     }
@@ -66,18 +56,9 @@ public class ApplicationTest {
         Arguments arguments = new ArgumentsParser().parse(new String[] {"-f", filePath, "-S", ".*?[a-z]{4}-\\d+.\\.[a-z]+"});
         String result = new SaxParser().parse(arguments);
         
-        String expected = "/file-77194797.xml" + System.lineSeparator()
-                        + "/dir-88971375/dir-414754795/file-09938329.pdf" + System.lineSeparator()
-                        + "/dir-88971375/dir-414754795/file-88874222.java" + System.lineSeparator()
-                        + "/dir-88971375/dir-414754795/file-33399233.dbf" + System.lineSeparator()
-                        + "/dir-88971375/dir-414754795/dir-67567567/file-12321321.rtf" + System.lineSeparator()
-                        + "/dir-88971375/dir-414754795/file-12333233.xml" + System.lineSeparator()
-                        + "/dir-88971375/file-9738721998.java" + System.lineSeparator()
-                        + "/dir-88971375/file-777939833.doc" + System.lineSeparator()
-                        + "/dir-88971375/dir-219753795/file-974842197.xhtml" + System.lineSeparator()
-                        + "/dir-88971375/dir-219753795/file-1541224222.txt" + System.lineSeparator()
-                        + "/dir-88971375/file-1236624789.cpp" + System.lineSeparator()
-                        + "/file-2576624200.xlsx" + System.lineSeparator();
+        String expected = "/file-776194140.xml" + System.lineSeparator()
+                        + "/dir-880176375/file-1073842118.java" + System.lineSeparator()
+                        + "/dir-880176375/dir-2145307015/file-1498940214.xhtml" + System.lineSeparator();
         
         assertEquals(expected, result);
     }
