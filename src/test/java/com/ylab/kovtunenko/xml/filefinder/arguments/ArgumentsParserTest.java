@@ -33,7 +33,7 @@ public class ArgumentsParserTest {
         String expectedMask = "asd*.txt";
         MaskType expectedMaskType = MaskType.MASK;
         
-        Arguments arguments = parser.parse(new String[] {"-f", expectedFileName, "-s", expectedMask});
+        Arguments arguments = parser.parse(new String[] {"-" + GlobalConstants.FILE, expectedFileName, "-" + GlobalConstants.SIMPLE_SEARCH, expectedMask});
         
         assertNotNull(arguments);
         assertEquals(expectedFileName, arguments.getFileName());
@@ -47,7 +47,7 @@ public class ArgumentsParserTest {
         String expectedMask = ".+[a-z]";
         MaskType expectedMaskType = MaskType.REGEXP;
         
-        Arguments arguments = parser.parse(new String[] {"-f", expectedFileName, "-s", expectedMask});
+        Arguments arguments = parser.parse(new String[] {"-" + GlobalConstants.FILE, expectedFileName, "-" + GlobalConstants.REGULAR_SEARCH, expectedMask});
         
         assertNotNull(arguments);
         assertEquals(expectedFileName, arguments.getFileName());

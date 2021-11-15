@@ -10,6 +10,10 @@ public interface GlobalConstants {
     public static final String CHILDREN = "CHILDREN";
     public static final String CHILD = "CHILD";
     
+    public static final String FILE = "f";
+    public static final String SIMPLE_SEARCH = "s";
+    public static final String REGULAR_SEARCH = "S";
+    
     public static final String IS_FILE = "is-file";
     
     public enum MaskType {

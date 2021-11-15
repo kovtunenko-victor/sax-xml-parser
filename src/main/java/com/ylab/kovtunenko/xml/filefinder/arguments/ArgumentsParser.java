@@ -1,6 +1,4 @@
 package com.ylab.kovtunenko.xml.filefinder.arguments;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -9,6 +7,7 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
+import com.ylab.kovtunenko.xml.filefinder.constants.GlobalConstants;
 import com.ylab.kovtunenko.xml.filefinder.constants.GlobalConstants.MaskType;
 import com.ylab.kovtunenko.xml.filefinder.exceptions.FileFinderAppException;
 
@@ -25,29 +24,24 @@ public class ArgumentsParser {
             throw new FileFinderAppException("Incoming arguments is null");
         }
         
-        Arguments arguments;
         CommandLine cmd = parseArguments(args);
-
-        if(cmd.getOptionValue("search") == null) {
-            arguments = new Arguments(cmd.getOptionValue("file"));
-        } else {
-            arguments = new Arguments(cmd.getOptionValue("file")
-                    , cmd.getOptionValue("search").replaceAll("'", "")
-                    , getMaskType(cmd.getOptionValue("search")));
-        }
         
-        return arguments;
+        return new Arguments(cmd.getOptionValue(GlobalConstants.FILE), getMask(cmd), getMaskType(cmd));
     }
     
     private void initOptions() {
-        Option file = new Option("f", "file", true, "input file");
+        Option file = new Option(GlobalConstants.FILE, GlobalConstants.FILE, true, "input file");
         file.setRequired(true);
         
-        Option search = new Option("s", "search", true, "simple search");
-        search.setRequired(false);
+        Option simpleSearch = new Option(GlobalConstants.SIMPLE_SEARCH, GlobalConstants.SIMPLE_SEARCH, true, "simple search");
+        simpleSearch.setRequired(false);
+        
+        Option regularSearch = new Option(GlobalConstants.REGULAR_SEARCH, GlobalConstants.REGULAR_SEARCH, true, "regular search");
+        regularSearch.setRequired(false);
         
         options.addOption(file);
-        options.addOption(search);
+        options.addOption(simpleSearch);
+        options.addOption(regularSearch);
     }
     
     private CommandLine parseArguments(String[] args) {
@@ -62,19 +56,27 @@ public class ArgumentsParser {
         }
     }
     
-    private MaskType getMaskType(String maskValue) {
-        Matcher matcher;
+    private String getMask(CommandLine cmd) {
+        if(cmd.getOptionValue(GlobalConstants.REGULAR_SEARCH) != null) {
+            return cmd.getOptionValue(GlobalConstants.REGULAR_SEARCH);
+        } 
         
-        matcher = Pattern.compile("'.+'").matcher(maskValue);
-        if (matcher.find()) {
-            return MaskType.REGEXP;
+        if(cmd.getOptionValue(GlobalConstants.SIMPLE_SEARCH) != null) {
+            return cmd.getOptionValue(GlobalConstants.SIMPLE_SEARCH);
         }
         
-        matcher = Pattern.compile(".*[\\*].*").matcher(maskValue);
-        if (matcher.find()) {
+        return GlobalConstants.EMPTY_STRING;
+    }
+    
+    private MaskType getMaskType(CommandLine cmd) {
+        if(cmd.getOptionValue(GlobalConstants.REGULAR_SEARCH) != null) {
+            return MaskType.REGEXP;
+        } 
+        
+        if(cmd.getOptionValue(GlobalConstants.SIMPLE_SEARCH) != null) {
             return MaskType.MASK;
         }
         
-        return MaskType.REGEXP;
+        return MaskType.NO_MASK;
     }
 }
