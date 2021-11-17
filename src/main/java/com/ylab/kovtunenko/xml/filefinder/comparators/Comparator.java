@@ -1,6 +1,8 @@
 package com.ylab.kovtunenko.xml.filefinder.comparators;
 
 public abstract class Comparator extends FileStore {
+    protected String searchValue;
+    
     public abstract boolean compare(String  searchData);
     
     @Override
@@ -12,5 +14,9 @@ public abstract class Comparator extends FileStore {
        } else {
            insertFolder(elementValue);
        }
+    }
+    
+    public void setSearchValue(String searchValue) {
+        this.searchValue = searchValue;
     }
 }

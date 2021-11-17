@@ -6,15 +6,12 @@ import java.util.List;
 import com.ylab.kovtunenko.xml.filefinder.constants.GlobalConstants;
 import com.ylab.kovtunenko.xml.filefinder.exceptions.FileFinderAppException;
 
-public abstract class FileStore {
-    protected String searchValue;
+public abstract class FileStore { 
     protected boolean isFile;
     protected List<String> tempPath;
     protected final StringBuilder result = new StringBuilder();
 
-    public void setSearchValue(String searchValue) {
-        this.searchValue = searchValue;
-    }
+    public abstract void insert(String elementValue);
     
     public void setIsFile(boolean isFile) {
         this.isFile = isFile;
@@ -27,9 +24,7 @@ public abstract class FileStore {
     public String getResult() {
         return result.toString();
     }
-    
-    public abstract void insert(String elementValue);
-    
+
     public void remuveLastFolder() {
         if (tempPath!= null && tempPath.size() > 0) {
             tempPath.remove(tempPath.size() - 1);
