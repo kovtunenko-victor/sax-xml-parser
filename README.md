@@ -10,6 +10,84 @@ java -jar assignment.jar -f <xml_file> -s <input>
 где:
 xml_file - это путь к предоставленному XML-файлу; input - строка поиска для фильтрации путей.
 
+Пример файла:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<node is-file="false">
+	<name>/</name>
+	<children>
+		<child is-file="true">
+			<name>file-776194140.xml</name>
+		</child>
+		<child is-file="false">
+			<name>dir-880176375</name>
+			<children>
+				<child is-file="true">
+					<name>file-1073842118.java</name>
+				</child>
+				<child is-file="false">
+					<name>dir-2145307015</name>
+					<children>
+						<child is-file="true">
+							<name>file-1498940214.xhtml</name>
+						</child>
+					</children>
+				</child>
+			</children>
+		</child>
+	</children>
+</node>
+```
+
+###Примеры выполнения:
+
+**Без поиска:**
+
+java -jar application.jar -f Data.xml
+
+Результат:
+
+```bash
+/file-776194140.xml
+/dir-880176375/file-1073842118.java
+/dir-880176375/file-1498940214.xhtml
+```
+
+**Поиск по полному имени:**
+
+java -jar application.jar -f Data.xml -s file-1498940214.xhtml
+
+Результат:
+
+```bash
+/dir-880176375/file-1498940214.xhtml
+```
+
+**Поиск по маске:**
+
+java -jar application.jar -f Data.xml -s *.java
+
+Результат:
+
+```bash
+/dir-880176375/file-1073842118.java
+```
+
+**Поиск по регулярному выражению:**
+
+java -jar application.jar -f Data.xml -S *?[a-z]{4}-\d+\.[a-z]+
+
+Результат:
+
+```bash
+/file-776194140.xml
+/dir-880176375/file-1073842118.java
+/dir-880176375/file-1498940214.xhtml
+```
+
+
+
 ### Как сделано
 
 * Что бы запусить приложение нужно клонировать репозиторий на локальный компьютер собрать проект (например командой maven install...)
