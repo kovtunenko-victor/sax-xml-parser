@@ -1,7 +1,7 @@
 package com.ylab.kovtunenko.sax.filefinder.handlers;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Deque;
+import java.util.LinkedList;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -17,12 +17,14 @@ public class DafaultHandler extends BaseHandler {
     private static final String CHILD = "CHILD";
 
     private StringBuilder result;
-    private List<String> tempPath;
     private StringBuilder elementValue;
     private boolean isFile;
+    
+    private final PathBuilder pathBuilder;
 
     public DafaultHandler(String searchMask, SearchProvider<String, String> searchProvider) {
         super(searchMask, searchProvider);
+        pathBuilder = new PathBuilder();
     }
 
     @Override
@@ -52,11 +54,11 @@ public class DafaultHandler extends BaseHandler {
             break;
         case CHILD:
             if (!isFile) {
-                remuveLastFolder();
+                pathBuilder.remuveLastFolder();
             }
             break;
         case CHILDREN:
-            remuveLastFolder();
+            pathBuilder.remuveLastFolder();
             isFile = true;
             break;
         case NAME:
@@ -89,45 +91,49 @@ public class DafaultHandler extends BaseHandler {
                 result = new StringBuilder();
             }
             if (searchProvider.search(elementValue.toString(), searchMask)) {
-                result.append(getTempPath()).append(elementValue.toString()).append(GlobalConstants.NEW_LINE);
+                result.append(pathBuilder.getTempPath()).append(elementValue.toString()).append(GlobalConstants.NEW_LINE);
             }
         } else {
-            insertFolder();
+            pathBuilder.insertFolder(elementValue.toString());
         }
     }
 
-    private void insertFolder() {
-        if (tempPath == null) {
-            tempPath = new ArrayList<>();
-        }
-
-        if (!elementValue.toString().equals(GlobalConstants.SLASH)) {
-            if(elementValue.toString().equals(GlobalConstants.EMPTY_STRING)) {
-                tempPath.add(GlobalConstants.NULL_STRING);
-            } else {
-                tempPath.add(elementValue.toString());
-            }
-        }
-    }
-
-    private void remuveLastFolder() {
-        if (tempPath.size() > 0) {
-            tempPath.remove(tempPath.size() - 1);
-        }
-    }
-
-    private String getTempPath() {
-        StringBuilder result = new StringBuilder();
-        result.append(GlobalConstants.SLASH);
-
-        tempPath.forEach(pathItem -> result.append(pathItem).append(GlobalConstants.SLASH));
-
-        return result.toString();
-    }
-    
     private void checkIsFile(Attributes attributes) {
         if (attributes.getValue("is-file") == null) {
             throw new FileFinderAppException("Is-file attribute is not set");
         }
+    }
+    
+    private class PathBuilder {
+        private final Deque<String> tempPath;
+        
+        public PathBuilder() {
+            tempPath = new LinkedList<>();
+        }
+        
+        private void insertFolder(String folder) {
+            if (!elementValue.toString().equals(GlobalConstants.SLASH)) {
+                if(elementValue.toString().equals(GlobalConstants.EMPTY_STRING)) {
+                    tempPath.add(GlobalConstants.NULL_STRING);
+                } else {
+                    tempPath.add(folder);
+                }
+            }
+        }
+
+        private void remuveLastFolder() {
+            if (tempPath.size() > 0) {
+                tempPath.removeLast();
+            }
+        }
+
+        private String getTempPath() {
+            StringBuilder result = new StringBuilder();
+            result.append(GlobalConstants.SLASH);
+
+            tempPath.forEach(pathItem -> result.append(pathItem).append(GlobalConstants.SLASH));
+
+            return result.toString();
+        } 
     }
 }
