@@ -2,8 +2,7 @@ package com.ylab.kovtunenko.sax.filefinder.providers;
 
 import com.ylab.kovtunenko.sax.filefinder.enums.MaskType;
 import com.ylab.kovtunenko.sax.filefinder.exceptions.FileFinderAppException;
-import com.ylab.kovtunenko.sax.filefinder.providers.impl.ExtensionSearchProvider;
-import com.ylab.kovtunenko.sax.filefinder.providers.impl.NameSearchProvider;
+import com.ylab.kovtunenko.sax.filefinder.providers.impl.MaskSearchProvider;
 import com.ylab.kovtunenko.sax.filefinder.providers.impl.RegexpSearchProvider;
 
 public class SearchProviderFactory {
@@ -22,10 +21,8 @@ public class SearchProviderFactory {
                 };
             case REGEXP:
                 return new RegexpSearchProvider();
-            case NAME:
-                return new NameSearchProvider();
-            case EXTENSION:
-                return new ExtensionSearchProvider();
+            case MASK:
+                return new MaskSearchProvider();
             default:
                 throw new FileFinderAppException(String.format("MaskType [%s] is unknown", maskType.name()));
         }

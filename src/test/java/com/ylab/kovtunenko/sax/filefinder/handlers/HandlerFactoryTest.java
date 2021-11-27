@@ -10,19 +10,19 @@ import com.ylab.kovtunenko.sax.filefinder.enums.HandlerType;
 import com.ylab.kovtunenko.sax.filefinder.exceptions.FileFinderAppException;
 import com.ylab.kovtunenko.sax.filefinder.providers.impl.RegexpSearchProvider;
 
-public class MySaxHandlerFactoryTest {
+public class HandlerFactoryTest {
     private final RegexpSearchProvider searchProvider = mock(RegexpSearchProvider.class);
     
     @Test
     public void newInstanceMethodShuldReturnDefaultHandler() {
-        MySaxHandler handler = MySaxHandlerFactory.newInstance(HandlerType.DEFAULT, "", searchProvider);
-        assertTrue(handler instanceof MySaxHandlerImpl);
+        BaseHandler handler = HandlerFactory.newInstance(HandlerType.DEFAULT, "", searchProvider);
+        assertTrue(handler instanceof DafaultHandler);
     }
     
     @Test
     public void newInstanceMethodShuldRizeExceptionWhenHandlerTypeIsNull() {
         Exception exception = assertThrows(FileFinderAppException.class, () -> {
-            MySaxHandlerFactory.newInstance(null, "", searchProvider);
+            HandlerFactory.newInstance(null, "", searchProvider);
         });
         
         String expectedMessage = "Handler type is null";
@@ -34,7 +34,7 @@ public class MySaxHandlerFactoryTest {
     @Test
     public void newInstanceMethodShuldRizeExceptionWhenSearchMaskIsNull() {
         Exception exception = assertThrows(FileFinderAppException.class, () -> {
-            MySaxHandlerFactory.newInstance(HandlerType.DEFAULT, null, searchProvider);
+            HandlerFactory.newInstance(HandlerType.DEFAULT, null, searchProvider);
         });
         
         String expectedMessage = "Search mask is null";
@@ -46,7 +46,7 @@ public class MySaxHandlerFactoryTest {
     @Test
     public void newInstanceMethodShuldRizeExceptionWhenSearchProviderIsNull() {
         Exception exception = assertThrows(FileFinderAppException.class, () -> {
-            MySaxHandlerFactory.newInstance(HandlerType.DEFAULT, "", null);
+            HandlerFactory.newInstance(HandlerType.DEFAULT, "", null);
         });
         
         String expectedMessage = "Search provider is null";

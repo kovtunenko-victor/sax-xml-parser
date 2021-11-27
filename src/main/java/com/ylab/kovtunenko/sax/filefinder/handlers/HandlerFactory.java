@@ -4,8 +4,8 @@ import com.ylab.kovtunenko.sax.filefinder.enums.HandlerType;
 import com.ylab.kovtunenko.sax.filefinder.exceptions.FileFinderAppException;
 import com.ylab.kovtunenko.sax.filefinder.providers.SearchProvider;
 
-public class MySaxHandlerFactory {
-    public static MySaxHandler newInstance(HandlerType handlerType, String searchMask, SearchProvider<String, String> searchProvider) {
+public class HandlerFactory {
+    public static BaseHandler newInstance(HandlerType handlerType, String searchMask, SearchProvider<String, String> searchProvider) {
         if (handlerType == null) {
             throw new FileFinderAppException("Handler type is null");
         }
@@ -20,7 +20,7 @@ public class MySaxHandlerFactory {
         
         switch(handlerType) {
             case DEFAULT:
-                return new MySaxHandlerImpl(searchMask, searchProvider);
+                return new DafaultHandler(searchMask, searchProvider);
             default:
                 throw new FileFinderAppException(String.format("HandlerType [%s] is unknown", handlerType.name()));
         }

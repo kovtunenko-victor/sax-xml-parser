@@ -7,19 +7,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import com.ylab.kovtunenko.sax.filefinder.exceptions.FileFinderAppException;
-import com.ylab.kovtunenko.sax.filefinder.providers.impl.ExtensionSearchProvider;
+import com.ylab.kovtunenko.sax.filefinder.providers.impl.MaskSearchProvider;
 
-public class ExtensionSearchProviderTest {
-    private final ExtensionSearchProvider provider = new ExtensionSearchProvider();
+public class MaskSearchProviderTest {
+    private final MaskSearchProvider provider = new MaskSearchProvider();
     
     @Test
     public void parseMethodShuldReturnTrueIfSearchValueFindedInSearchData() {
-        assertTrue(provider.search("Test.java", "Test.*"));
+        assertTrue(provider.search("Test.java", "Te*.java"));
     }
     
     @Test
     public void parseMethodShuldReturnFalseIfSearchValueNotFindedInSearchData() {
-        assertFalse(provider.search("Simple.xml", "Test.*"));
+        assertFalse(provider.search("Simple.xml", "Te*.java"));
     }
     
     @Test
@@ -43,4 +43,6 @@ public class ExtensionSearchProviderTest {
 
         assertTrue(actualMessage.contains(expectedMessage));
     }
+    
+   
 }

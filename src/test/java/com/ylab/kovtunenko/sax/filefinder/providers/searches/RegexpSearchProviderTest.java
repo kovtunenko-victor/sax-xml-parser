@@ -13,27 +13,27 @@ public class RegexpSearchProviderTest {
     private final RegexpSearchProvider provider = new RegexpSearchProvider();
     
     @Test
-    public void parseMethodShuldReturnTrueIfSearchValueFindedInSearchData() {
+    public void searchMethodShuldReturnTrueIfSearchValueFindedInSearchData() {
         assertTrue(provider.search("Test.java", "T.+\\.j.*"));
     }
     
     @Test
-    public void parseMethodShuldReturnFalseIfSearchValueNotFindedInSearchData() {
+    public void searchMethodShuldReturnFalseIfSearchValueNotFindedInSearchData() {
         assertFalse(provider.search("Simple.java", "T.+\\.j.*"));
     }
     
     @Test
-    public void parseMethodShuldReturnTrueIfSearchValueIsNull() {
+    public void searchMethodShuldReturnTrueIfSearchValueIsNull() {
         assertTrue(provider.search("Simple.java", null));
     }
     
     @Test
-    public void parseMethodShuldReturnTrueIfSearchValueIsEmpty() {
+    public void searchMethodShuldReturnTrueIfSearchValueIsEmpty() {
         assertTrue(provider.search("Simple.java", ""));
     }
     
     @Test
-    public void parseMethodShuldRizeExceptionWhenSearchDataIsNull() {
+    public void searchMethodShuldRizeExceptionWhenSearchDataIsNull() {
         Exception exception = assertThrows(FileFinderAppException.class, () -> {
             provider.search(null, "");
         });

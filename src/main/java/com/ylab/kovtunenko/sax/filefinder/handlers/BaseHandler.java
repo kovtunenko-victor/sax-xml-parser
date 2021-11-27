@@ -4,11 +4,11 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import com.ylab.kovtunenko.sax.filefinder.providers.SearchProvider;
 
-public abstract class MySaxHandler extends DefaultHandler {
+public abstract class BaseHandler extends DefaultHandler {
     protected final SearchProvider<String, String> searchProvider;
     protected final String searchMask;
     
-    public MySaxHandler(String searchMask, SearchProvider<String, String> searchProvider) {
+    public BaseHandler(String searchMask, SearchProvider<String, String> searchProvider) {
         this.searchProvider = searchProvider;
         this.searchMask = searchMask; 
     }

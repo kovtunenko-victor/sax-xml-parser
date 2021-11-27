@@ -13,8 +13,8 @@ import com.ylab.kovtunenko.sax.filefinder.domain.Arguments;
 import com.ylab.kovtunenko.sax.filefinder.enums.HandlerType;
 import com.ylab.kovtunenko.sax.filefinder.enums.MaskType;
 import com.ylab.kovtunenko.sax.filefinder.exceptions.FileFinderAppException;
-import com.ylab.kovtunenko.sax.filefinder.handlers.MySaxHandler;
-import com.ylab.kovtunenko.sax.filefinder.handlers.MySaxHandlerFactory;
+import com.ylab.kovtunenko.sax.filefinder.handlers.BaseHandler;
+import com.ylab.kovtunenko.sax.filefinder.handlers.HandlerFactory;
 import com.ylab.kovtunenko.sax.filefinder.providers.ParserProvider;
 import com.ylab.kovtunenko.sax.filefinder.providers.ReaderProvider;
 import com.ylab.kovtunenko.sax.filefinder.providers.SearchProvider;
@@ -49,7 +49,7 @@ public class XmlFileParserProvider  implements ParserProvider<String, Arguments>
             saxParserFactory.setNamespaceAware(false);
             SAXParser saxParser = saxParserFactory.newSAXParser();
             
-            MySaxHandler handler = MySaxHandlerFactory.newInstance(handlerType, arguments.getSearchMask(), getSearchProvider(arguments.getSearchMaskType()));
+            BaseHandler handler = HandlerFactory.newInstance(handlerType, arguments.getSearchMask(), getSearchProvider(arguments.getSearchMaskType()));
 
             saxParser.parse(reader.read(arguments.getFileName()), handler);
             
@@ -60,7 +60,7 @@ public class XmlFileParserProvider  implements ParserProvider<String, Arguments>
         }
     }
     
-    public SearchProvider<String, String> getSearchProvider(MaskType maskType) {
+    private SearchProvider<String, String> getSearchProvider(MaskType maskType) {
         return SearchProviderFactory.newInstance(maskType);
     }
 }

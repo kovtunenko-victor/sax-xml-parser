@@ -10,7 +10,7 @@ import com.ylab.kovtunenko.sax.filefinder.constants.GlobalConstants;
 import com.ylab.kovtunenko.sax.filefinder.exceptions.FileFinderAppException;
 import com.ylab.kovtunenko.sax.filefinder.providers.SearchProvider;
 
-public class MySaxHandlerImpl extends MySaxHandler {
+public class DafaultHandler extends BaseHandler {
     private static final String NODE = "NODE";
     private static final String NAME = "NAME";
     private static final String CHILDREN = "CHILDREN";
@@ -21,7 +21,7 @@ public class MySaxHandlerImpl extends MySaxHandler {
     private StringBuilder elementValue;
     private boolean isFile;
 
-    public MySaxHandlerImpl(String searchMask, SearchProvider<String, String> searchProvider) {
+    public DafaultHandler(String searchMask, SearchProvider<String, String> searchProvider) {
         super(searchMask, searchProvider);
     }
 

@@ -9,8 +9,7 @@ import com.ylab.kovtunenko.sax.filefinder.enums.MaskType;
 import com.ylab.kovtunenko.sax.filefinder.exceptions.FileFinderAppException;
 import com.ylab.kovtunenko.sax.filefinder.providers.SearchProvider;
 import com.ylab.kovtunenko.sax.filefinder.providers.SearchProviderFactory;
-import com.ylab.kovtunenko.sax.filefinder.providers.impl.ExtensionSearchProvider;
-import com.ylab.kovtunenko.sax.filefinder.providers.impl.NameSearchProvider;
+import com.ylab.kovtunenko.sax.filefinder.providers.impl.MaskSearchProvider;
 import com.ylab.kovtunenko.sax.filefinder.providers.impl.RegexpSearchProvider;
 
 public class SearchProviderFactoryTest {
@@ -28,14 +27,8 @@ public class SearchProviderFactoryTest {
     
     @Test
     public void newInstanceMethodShuldReturnNameSearchProvider() {
-        SearchProvider<String, String> provider = SearchProviderFactory.newInstance(MaskType.NAME);
-        assertTrue(provider instanceof NameSearchProvider);
-    }
-    
-    @Test
-    public void newInstanceMethodShuldReturnExtensionSearchProvider() {
-        SearchProvider<String, String> provider = SearchProviderFactory.newInstance(MaskType.EXTENSION);
-        assertTrue(provider instanceof ExtensionSearchProvider);
+        SearchProvider<String, String> provider = SearchProviderFactory.newInstance(MaskType.MASK);
+        assertTrue(provider instanceof MaskSearchProvider);
     }
     
     @Test
@@ -45,6 +38,18 @@ public class SearchProviderFactoryTest {
         });
         
         String expectedMessage = "Mask type is null";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+    
+    @Test
+    public void newInstanceMethodShuldRizeExceptionWhenMaskTypeIsUnknown() {
+        Exception exception = assertThrows(FileFinderAppException.class, () -> {
+            SearchProviderFactory.newInstance(MaskType.UNKNOWN);
+        });
+        
+        String expectedMessage = "MaskType [UNKNOWN] is unknown";
         String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage));

@@ -13,11 +13,11 @@ import org.xml.sax.SAXException;
 import com.ylab.kovtunenko.sax.filefinder.exceptions.FileFinderAppException;
 import com.ylab.kovtunenko.sax.filefinder.providers.impl.RegexpSearchProvider;
 
-public class MySaxHandlerImplTest {
+public class DefaultHandlerTest {
     private final RegexpSearchProvider searchProvider = mock(RegexpSearchProvider.class);
     private final static String MASK = ".+";
     private final Attributes attributes = mock(Attributes.class);
-    private MySaxHandlerImpl handler;
+    private DafaultHandler handler;
     
     
     @Test
@@ -41,7 +41,7 @@ public class MySaxHandlerImplTest {
     @Test
     public void getResultMethodShuldRizeExceptionWhenXmlNotInFormat() throws SAXException {
         Exception exception = assertThrows(FileFinderAppException.class, () -> {
-            handler = new MySaxHandlerImpl(MASK, searchProvider);
+            handler = new DafaultHandler(MASK, searchProvider);
             handler.getResult();
         });
 
@@ -55,7 +55,7 @@ public class MySaxHandlerImplTest {
         when(searchProvider.search("file-0001.xlsx", MASK)).thenReturn(true);
         when(searchProvider.search("file-0002.xlsx", MASK)).thenReturn(true);
         when(searchProvider.search("file-0003.xlsx", MASK)).thenReturn(true);
-        handler = new MySaxHandlerImpl(MASK, searchProvider);
+        handler = new DafaultHandler(MASK, searchProvider);
         
         emulateStartElement("node", false);
         emulateStartElement("name");
